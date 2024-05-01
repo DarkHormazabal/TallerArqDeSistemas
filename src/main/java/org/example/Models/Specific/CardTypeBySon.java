@@ -1,14 +1,13 @@
 package org.example.Models.Specific;
 
-import io.ebean.annotation.NotNull;
 import lombok.*;
-import org.example.Models.Card;
+import org.example.Models.BaseModel;
 
 import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 
 /**
- * SkillCard Class.
+ * CardType Class.
  *
  * @author Matias Orellana Hormazábal.
  */
@@ -16,20 +15,13 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @Setter
+@AllArgsConstructor
 @Builder
 @Entity
-public class SkillCard extends Card {
+public class CardTypeBySon extends BaseModel {
 
     /**
-     * The power.
+     * Card Type haven't atributtes in specific, ID and name have the BaseModel
      */
-    @NotNull
-    private int power;
-
-    /**
-     * The typeID.
-     */
-    @NotNull
-    private long typeID;
 
 }
