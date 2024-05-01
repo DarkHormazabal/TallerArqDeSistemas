@@ -22,14 +22,16 @@ public interface ICardRepository {
 
     /**
      * @return
-     * @param id to view
+     * @param preccenseID to view
+     * show cards by preccenseID
      */
-    public List<Card> getCardsByPreccense(int preccense);
+    public List<Card> getCardsByPreccense(long preccenseID);
 
     /**
      * @return
      * @param id to view
+     * show cards by id
      */
-    public List<Card> getCardsById(int id);
+    public List<Card> getCardsById(long id);
 
 }

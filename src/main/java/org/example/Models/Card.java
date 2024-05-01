@@ -42,12 +42,12 @@ public abstract class Card extends BaseModel{
      * The deleted.
      */
     @NotNull
-    private long preccenseID;
+    private Long preccenseID;
 
     /**
      * The deleted.
      */
     @NotNull
-    private long typeCardID;
+    private Long typeCardID;
 
 }
