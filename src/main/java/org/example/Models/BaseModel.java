@@ -1,5 +1,6 @@
 package org.example.Models;
 
+import io.ebean.annotation.NotNull;
 import io.ebean.annotation.WhenCreated;
 import io.ebean.annotation.WhenModified;
 import lombok.Builder;
@@ -33,6 +34,7 @@ public abstract class BaseModel {
      * The Name.
      * All tables have name's attribute, therefore is implemented here
      */
+    @NotNull
     private String name;
 
     /**

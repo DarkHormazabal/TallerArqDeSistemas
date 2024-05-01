@@ -1,5 +1,6 @@
 package org.example.Models;
 
+import io.ebean.annotation.NotNull;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -22,16 +23,25 @@ public abstract class Card extends BaseModel{
     /**
      * The level.
      */
+    @NotNull
     private int level;
 
     /**
      * The description.
      */
+    @NotNull
     private String description;
 
     /**
      * The deleted.
      */
+    @NotNull
     private boolean deleted;
+
+    /**
+     * The deleted.
+     */
+    @NotNull
+    private long preccenseId;
 
 }
