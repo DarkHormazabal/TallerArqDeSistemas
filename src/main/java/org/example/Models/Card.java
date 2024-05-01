@@ -45,7 +45,7 @@ public abstract class Card extends BaseModel{
     private Long preccenseID;
 
     /**
-     * The deleted.
+     * The typeCardID but by son.
      */
     @NotNull
     private Long typeCardID;

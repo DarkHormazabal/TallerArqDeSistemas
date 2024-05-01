@@ -25,13 +25,20 @@ public interface ICardRepository {
      * @param preccenseID to view
      * show cards by preccenseID
      */
-    public List<Card> getCardsByPreccense(long preccenseID);
+    public List<Card> getCardsByPreccense(Long preccenseID);
 
     /**
      * @return
      * @param id to view
      * show cards by id
      */
-    public List<Card> getCardsById(long id);
+    public Card getCardsById(Long id);
+
+    /**
+     * @return
+     * @param id to view
+     * change Card's delete
+     */
+    public boolean deleteCard(Long id);
 
 }
