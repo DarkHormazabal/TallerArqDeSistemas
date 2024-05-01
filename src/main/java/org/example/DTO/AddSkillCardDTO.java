@@ -1,24 +1,20 @@
-package org.example.Models;
+package org.example.DTO;
 
 import io.ebean.annotation.NotNull;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
-
-/**
- * Card abstract Class.
- *
- * @author Matias Orellana Hormazábal.
- */
 @ToString
-@MappedSuperclass
 @Getter
 @Setter
-@AllArgsConstructor
-@Builder
-@Entity
-public abstract class Card extends BaseModel{
+public class AddSkillCardDTO {
+
+    /**
+     * The Name.
+     */
+    @NotNull
+    private String name;
 
     /**
      * The level.
@@ -45,9 +41,14 @@ public abstract class Card extends BaseModel{
     private long preccenseId;
 
     /**
-     * The deleted.
+     * The power.
      */
     @NotNull
-    private int typeCardID;
+    private int power;
 
+    /**
+     * The typeID.
+     */
+    @NotNull
+    private int typeID;
 }
