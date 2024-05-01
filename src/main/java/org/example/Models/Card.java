@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 
 /**
- * Cart abstract Class.
+ * Card abstract Class.
  *
  * @author Matias Orellana Hormazábal.
  */
