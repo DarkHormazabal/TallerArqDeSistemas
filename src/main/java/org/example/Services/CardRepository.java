@@ -32,6 +32,8 @@ public class CardRepository implements ICardRepository {
      */
     private final Database database;
 
+    //private final
+
     public CardRepository(Database database) {
         this.database = database;
     }
