@@ -1,5 +1,7 @@
 package org.example.Interfaces;
 
+import org.example.DTO.AddEntityCardDTO;
+import org.example.DTO.AddSkillCardDTO;
 import org.example.Models.Card;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,10 +11,17 @@ import java.util.List;
 public interface ICardRepository {
 
     /**
-     * @param card to add
+     * @param addEntityCardDTO to add
      * @return
      */
-    public Card addCard(Card card);
+    public Card addEntityCard(AddEntityCardDTO addEntityCardDTO);
+
+    /**
+     * @param addSkillCardDTO to add
+     * @return
+     */
+    public Card addSkillCard(AddSkillCardDTO addSkillCardDTO);
+
 
     /**
      * @return
@@ -40,5 +49,11 @@ public interface ICardRepository {
      * change Card's delete
      */
     public boolean deleteCard(Long id);
+
+    /**
+     * @return
+     * save the changes
+     */
+    public boolean saveChanges();
 
 }
