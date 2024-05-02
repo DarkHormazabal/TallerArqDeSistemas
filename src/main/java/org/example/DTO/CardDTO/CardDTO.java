@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class CardDTO {
+public abstract class CardDTO {
 
     /**
      * The Name.

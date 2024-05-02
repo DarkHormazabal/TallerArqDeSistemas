@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.example.DTO.AddEntityCardDTO;
 import org.example.DTO.AddSkillCardDTO;
+import org.example.Helpers.AutoMapper;
 import org.example.Interfaces.ICardRepository;
 import org.example.Models.Card;
 import org.example.Models.Specific.CardType;
@@ -32,10 +33,12 @@ public class CardRepository implements ICardRepository {
      */
     private final Database database;
 
-    //private final
+    private final AutoMapper autoMapper;
 
-    public CardRepository(Database database) {
+
+    public CardRepository(Database database, AutoMapper autoMapper) {
         this.database = database;
+        this.autoMapper = autoMapper;
     }
 
     @Override
