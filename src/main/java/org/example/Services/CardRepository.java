@@ -56,31 +56,37 @@ public class CardRepository implements ICardRepository {
 
     @Override
     public Card addEntityCard(AddEntityCardDTO addEntityCardDTO) {
+        //automapping
         EntityCard entityCard = AutoMapper.map(addEntityCardDTO, EntityCard.class);
+        //change your preccense
         entityCard.setPreccense(preccenseRepository.getPreccenseById(addEntityCardDTO.getPreccenseID()));
+        this.database.save(entityCard);
         return entityCard;
     }
 
     @Override
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO) {
+        //automapping
         SkillCard skillCard = AutoMapper.map(addSkillCardDTO, SkillCard.class);
+        //change your preccense
         skillCard.setPreccense(preccenseRepository.getPreccenseById(addSkillCardDTO.getPreccenseID()));
+        //change your cardType
         skillCard.setCardType(typeRepository.getTypeSkillCardById(addSkillCardDTO.getTypeID()));
-        return AutoMapper.map(addSkillCardDTO, SkillCard.class);
+        this.database.save(skillCard);
+        return skillCard;
     }
 
     @Override
     public List<CardDTO> getCards() {
 
-        List<CardDTO> cardsDTO = new ArrayList<>();
-        Preccense preccense;
+        List<CardDTO> cardsDTO = new ArrayList<>();//initial cardsDTO
 
-
-        if (cards.isEmpty()){return cardsDTO;}
+        if (cards.isEmpty()){return cardsDTO;}//is empty, return because is unnecessary do the follow process
 
         for (Card card : cards){
+            //execute this process only when the card isn't deleted (deleted == true)
             if (!card.isDeleted()){
-                preccense = card.getPreccense();
+                Preccense preccense = card.getPreccense();//obtain card's preccense
                 AssignCardTypeGeneral(cardsDTO, preccense, card);
             }
         }
@@ -88,37 +94,14 @@ public class CardRepository implements ICardRepository {
         return cardsDTO;
     }
 
-    private void AssignCardTypeGeneral(List<CardDTO> cardsDTO, Preccense preccense, Card card) {
-        EntityCardDTO entityCardDTO;
-        CardType skillCardType;
-        SkillCardDTO skillCardDTO;
-        SkillCard skillCard;
-        if (card instanceof EntityCard){
-            entityCardDTO = AutoMapper.map((EntityCard)card, EntityCardDTO.class);
-            entityCardDTO.setColorPersistence(preccense.getName());
-            entityCardDTO.setNamePersistence(preccense.getColor());
-            cardsDTO.add(entityCardDTO);
-
-        } else {
-            skillCard = (SkillCard) card;
-            skillCardType = skillCard.getCardType();
-            skillCardDTO = AutoMapper.map((SkillCard)card, SkillCardDTO.class);
-            skillCardDTO.setColorPersistence(preccense.getColor());
-            skillCardDTO.setNamePersistence(preccense.getName());
-            skillCardDTO.setTypeName(skillCardType.getName());
-            cardsDTO.add(AutoMapper.map((SkillCard)card, SkillCardDTO.class));
-        }
-    }
-
     @Override
     public List<CardDTO> getCardsByPreccense(Long preccenseID) {
 
+        //is similar, but preccense is found by id sent by client
         List<CardDTO> cardsDTO = new ArrayList<>();
-        Preccense preccense = preccenseRepository.getPreccenseById(preccenseID);
+        Preccense preccense = preccenseRepository.getPreccenseById(preccenseID);//obtain the preccense
 
-        if(preccense == null){return null;}
-
-        if (cards.isEmpty()){return cardsDTO;}
+        if (cards.isEmpty() || preccense == null){return cardsDTO;}
 
         for (Card card : cards){
             if (!card.isDeleted()){
@@ -132,43 +115,72 @@ public class CardRepository implements ICardRepository {
     @Override
     public CardDTO getCardById(Long id) {
 
-        Card card = database.find(Card.class, id);
+        Card card = database.find(Card.class, id);//find tha card
         if (card == null || card.isDeleted()){ return null; }
-        Preccense preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
-        EntityCardDTO entityCardDTO;
-        SkillCardDTO skillCardDTO;
-        SkillCard skillCard;
-        CardType skillCardType;
+        Preccense preccense = card.getPreccense();
+        //is similar to than others gets, but don't use the method "AssignCardTypeGeneral"
+        //because isn't list
         if (card instanceof EntityCard){
 
-            entityCardDTO = AutoMapper.map((EntityCard)card, EntityCardDTO.class);
-            entityCardDTO.setColorPersistence(preccense.getColor());
-            entityCardDTO.setNamePersistence(preccense.getName());
-            return AutoMapper.map(entityCardDTO, CardDTO.class);
+            return AssignEntityCard(preccense, card);
 
         } else {
-            skillCard = (SkillCard) card;
-            skillCardType = skillCard.getCardType();
-            skillCardDTO = AutoMapper.map((SkillCard)card, SkillCardDTO.class);
-            skillCardDTO.setColorPersistence(preccense.getColor());
-            skillCardDTO.setNamePersistence(preccense.getName());
-            skillCardDTO.setTypeName(skillCardType.getName());
-            return AutoMapper.map(skillCardDTO, CardDTO.class);
+            return AssignSkillCard(preccense, card);
         }
     }
 
     @Override
     public boolean deleteCard(Long id) {
-        Card card = database.find(Card.class, id);
+        Card card = database.find(Card.class, id);//find the card
         if (card == null || card.isDeleted()){ return false; }
         card.setDeleted(true);
         this.database.save(card);
         return true;
     }
 
-    @Override
-    public boolean saveChanges(Card card) {
-        this.database.save(card);
-        return true;
+    private void AssignCardTypeGeneral(List<CardDTO> cardsDTO, Preccense preccense, Card card) {
+
+
+        //in case EntityCard
+        if (card instanceof EntityCard){
+
+            //add this in cardsDTO
+            EntityCardDTO entityCardDTO = AssignEntityCard(preccense, card);
+            cardsDTO.add(entityCardDTO);
+
+            //in case SkillCard
+        } else {
+
+            SkillCardDTO skillCardDTO = AssignSkillCard(preccense, card);
+            //add this in cardsDTO
+            cardsDTO.add(skillCardDTO);
+        }
     }
+
+    private EntityCardDTO AssignEntityCard(Preccense preccense, Card card) {
+
+        EntityCardDTO entityCardDTO = AutoMapper.map((EntityCard)card, EntityCardDTO.class);//Automaping
+        //change the atributtes to show
+        entityCardDTO.setColorPersistence(preccense.getName());
+        entityCardDTO.setNamePersistence(preccense.getColor());
+        return entityCardDTO;
+
+    }
+
+    private SkillCardDTO AssignSkillCard(Preccense preccense, Card card) {
+
+        SkillCardDTO skillCardDTO = AutoMapper.map((SkillCard)card, SkillCardDTO.class);//Automaping
+        //Your skillCardTYpe
+        SkillCard skillCard = (SkillCard) card;
+        //only to using the casting
+        CardType skillCardType = skillCard.getCardType();
+
+        //change the atributtes to show
+        skillCardDTO.setColorPersistence(preccense.getColor());
+        skillCardDTO.setNamePersistence(preccense.getName());
+        skillCardDTO.setTypeName(skillCardType.getName());
+        return skillCardDTO;
+
+    }
+
 }

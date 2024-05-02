@@ -23,6 +23,16 @@ public interface ICardRepository {
      */
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO);
 
+    /**
+     * @param restoreCardDTO to add
+     * @return
+     */
+
+    /**
+     * @param FindCard add
+     * @return
+     */
+
 
     /**
      * @return
@@ -50,11 +60,5 @@ public interface ICardRepository {
      * change Card's delete
      */
     public boolean deleteCard(Long id);
-
-    /**
-     * @return
-     * save the changes
-     */
-    public boolean saveChanges(Card card);
 
 }
