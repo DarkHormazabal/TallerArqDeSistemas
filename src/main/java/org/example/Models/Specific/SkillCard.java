@@ -30,6 +30,14 @@ public class SkillCard extends Card {
      * The typeID.
      */
     @NotNull
-    private int typeID;
+    private long typeID;
 
+    private CardType cardType;
+
+    public SkillCard(int level, String description, boolean deleted, Long preccenseID, Preccense preccense, int power, long typeID, CardType cardType) {
+        super(level, description, deleted, preccenseID, preccense);
+        this.power = power;
+        this.typeID = typeID;
+        this.cardType = cardType;
+    }
 }

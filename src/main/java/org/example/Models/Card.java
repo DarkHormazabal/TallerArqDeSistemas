@@ -2,6 +2,7 @@ package org.example.Models;
 
 import io.ebean.annotation.NotNull;
 import lombok.*;
+import org.example.Models.Specific.Preccense;
 
 import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
@@ -42,6 +43,11 @@ public abstract class Card extends BaseModel{
      * The deleted.
      */
     @NotNull
-    private long preccenseId;
+    private Long preccenseID;
 
+    private Preccense preccense;
+
+    public Card() {
+        this.deleted = false;
+    }
 }

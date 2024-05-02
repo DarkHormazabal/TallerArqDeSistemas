@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.Models.Card;
 
 import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
@@ -20,7 +21,7 @@ import javax.persistence.MappedSuperclass;
 @Setter
 @Builder
 @Entity
-public class EntityCard {
+public class EntityCard extends Card {
 
     /**
      * The physicalPower.
@@ -46,4 +47,11 @@ public class EntityCard {
     @NotNull
     private int magicalProtection;
 
+    public EntityCard(int level, String description, boolean deleted, Long preccenseID, Preccense preccense, int physicalPower, int magicalPower, int physicalProtection, int magicalProtection) {
+        super(level, description, deleted, preccenseID, preccense);
+        this.physicalPower = physicalPower;
+        this.magicalPower = magicalPower;
+        this.physicalProtection = physicalProtection;
+        this.magicalProtection = magicalProtection;
+    }
 }
