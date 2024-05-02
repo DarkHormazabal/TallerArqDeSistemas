@@ -64,6 +64,8 @@ public class CardRepository implements ICardRepository {
         Preccense preccense;
         CardType skillCardType;
 
+        if (cards.isEmpty()){return cardsDTO;}
+
         for (Card card : cards){
 
             preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
@@ -103,8 +105,14 @@ public class CardRepository implements ICardRepository {
         CardType skillCardType;
         Preccense preccense = preccenseRepository.getPreccenseById(preccenseID);
 
+        if(preccense == null){return null;}
+
+        if (cards.isEmpty()){return cardsDTO;}
+
         for (Card card : cards){
-            AssignCardTypeGeneral(cardsDTO, preccense, card);
+            if (!card.isDeleted()){
+                AssignCardTypeGeneral(cardsDTO, preccense, card);
+            }
         }
 
         return cardsDTO;
@@ -114,7 +122,7 @@ public class CardRepository implements ICardRepository {
     public CardDTO getCardById(Long id) {
 
         Card card = database.find(Card.class, id);
-        if (card == null){ return null; }
+        if (card == null || card.isDeleted()){ return null; }
         Preccense preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
         EntityCardDTO entityCardDTO;
         SkillCardDTO skillCardDTO;
@@ -138,7 +146,11 @@ public class CardRepository implements ICardRepository {
 
     @Override
     public boolean deleteCard(Long id) {
-        return false;
+        Card card = database.find(Card.class, id);
+        if (card == null || card.isDeleted()){ return false; }
+        card.setDeleted(true);
+        this.database.save(card);
+        return true;
     }
 
     @Override
