@@ -2,6 +2,7 @@ package org.example.Interfaces;
 
 import org.example.DTO.AddEntityCardDTO;
 import org.example.DTO.AddSkillCardDTO;
+import org.example.DTO.CardDTO.CardDTO;
 import org.example.Models.Card;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,21 +28,21 @@ public interface ICardRepository {
      * @return
      * show cards in general
      */
-    public List<Card> getCards();
+    public List<CardDTO> getCards();
 
     /**
      * @return
      * @param preccenseID to view
      * show cards by preccenseID
      */
-    public List<Card> getCardsByPreccense(Long preccenseID);
+    public List<CardDTO> getCardsByPreccense(Long preccenseID);
 
     /**
      * @return
      * @param id to view
      * show cards by id
      */
-    public Card getCardsById(Long id);
+    public CardDTO getCardsById(Long id);
 
     /**
      * @return
@@ -54,6 +55,6 @@ public interface ICardRepository {
      * @return
      * save the changes
      */
-    public boolean saveChanges();
+    public boolean saveChanges(Card card);
 
 }

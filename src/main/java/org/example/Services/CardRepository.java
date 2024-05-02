@@ -6,12 +6,11 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.example.DTO.AddEntityCardDTO;
 import org.example.DTO.AddSkillCardDTO;
+import org.example.DTO.CardDTO.CardDTO;
 import org.example.Helpers.AutoMapper;
 import org.example.Interfaces.ICardRepository;
 import org.example.Models.Card;
-import org.example.Models.Specific.CardType;
-import org.example.Models.Specific.CardTypeBySon;
-import org.example.Models.Specific.Preccense;
+import org.example.Models.Specific.*;
 
 import java.util.List;
 
@@ -43,26 +42,26 @@ public class CardRepository implements ICardRepository {
 
     @Override
     public Card addEntityCard(AddEntityCardDTO addEntityCardDTO) {
-        return null;
+        return AutoMapper.map(addEntityCardDTO, EntityCard.class);
     }
 
     @Override
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO) {
-        return null;
+        return AutoMapper.map(addSkillCardDTO, SkillCard.class);
     }
 
     @Override
-    public List<Card> getCards() {
+    public List<CardDTO> getCards() {
         return List.of();
     }
 
     @Override
-    public List<Card> getCardsByPreccense(Long preccenseID) {
+    public List<CardDTO> getCardsByPreccense(Long preccenseID) {
         return List.of();
     }
 
     @Override
-    public Card getCardsById(Long id) {
+    public CardDTO getCardsById(Long id) {
         return null;
     }
 
@@ -72,7 +71,8 @@ public class CardRepository implements ICardRepository {
     }
 
     @Override
-    public boolean saveChanges() {
-        return false;
+    public boolean saveChanges(Card card) {
+        this.database.save(card);
+        return true;
     }
 }
