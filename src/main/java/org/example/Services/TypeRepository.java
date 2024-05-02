@@ -9,6 +9,9 @@ import org.example.Models.Specific.CardType;
 
 import java.util.List;
 
+/**
+ * Similar to Preccense, but only applied to SkillCard
+ */
 @Slf4j
 @Getter
 @Setter

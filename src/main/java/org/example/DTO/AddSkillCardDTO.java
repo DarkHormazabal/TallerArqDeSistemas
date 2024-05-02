@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Adding SkillCard by DTO
+ */
+
 @ToString
 @Getter
 @Setter
@@ -38,7 +42,7 @@ public class AddSkillCardDTO {
      * The deleted.
      */
     @NotNull
-    private long preccenseId;
+    private Long preccenseID;
 
     /**
      * The power.
@@ -50,5 +54,5 @@ public class AddSkillCardDTO {
      * The typeID.
      */
     @NotNull
-    private int typeID;
+    private Long typeID;
 }

@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Adding EntityCard by DTO
+ */
+
 @ToString
 @Getter
 @Setter
@@ -38,7 +42,7 @@ public class AddEntityCardDTO {
      * The deleted.
      */
     @NotNull
-    private long preccenseId;
+    private Long preccenseID;
 
     /**
      * The physicalPower.

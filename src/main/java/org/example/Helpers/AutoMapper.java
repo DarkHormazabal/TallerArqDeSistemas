@@ -2,6 +2,9 @@ package org.example.Helpers;
 
 import org.modelmapper.ModelMapper;
 
+/**
+ * Automapper with dtos to model and inverse
+ */
 public class AutoMapper {
 
     private static ModelMapper modelMapper = new ModelMapper();

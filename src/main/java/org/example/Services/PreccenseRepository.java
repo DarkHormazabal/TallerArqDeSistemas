@@ -14,8 +14,14 @@ import java.util.List;
 @Setter
 public class PreccenseRepository implements IPreccenseRepository {
 
+    /**
+     * The database
+     */
     private final Database database;
 
+    /**
+     * The preccense's list
+     */
     private List<Preccense> preccenses;
 
     public PreccenseRepository(Database database) {
@@ -24,6 +30,7 @@ public class PreccenseRepository implements IPreccenseRepository {
 
     @Override
     public Preccense getPreccenseById(Long id) {
+        //find the Preccense
         return database.find(Preccense.class, id);
     }
 }

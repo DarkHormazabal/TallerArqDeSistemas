@@ -8,6 +8,10 @@ import lombok.ToString;
 
 import javax.persistence.MappedSuperclass;
 
+/**
+ * Deploy the cards to client
+ */
+
 @ToString
 @Getter
 @Setter
