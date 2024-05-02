@@ -42,7 +42,7 @@ public interface ICardRepository {
      * @param id to view
      * show cards by id
      */
-    public CardDTO getCardsById(Long id);
+    public CardDTO getCardById(Long id);
 
     /**
      * @return

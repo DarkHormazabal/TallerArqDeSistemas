@@ -1,13 +1,18 @@
 package org.example.DTO.CardDTO;
 
 import io.ebean.annotation.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.MappedSuperclass;
+
 @ToString
 @Getter
 @Setter
+@MappedSuperclass
+@AllArgsConstructor
 public abstract class CardDTO {
 
     /**
@@ -28,5 +33,17 @@ public abstract class CardDTO {
      */
     @NotNull
     private String description;
+
+    /**
+     * The persistence's name.
+     */
+    @NotNull
+    private String namePersistence;
+
+    /**
+     * The persistence's color.
+     */
+    @NotNull
+    private String colorPersistence;
 
 }
