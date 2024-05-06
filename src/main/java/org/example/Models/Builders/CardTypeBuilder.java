@@ -1,7 +1,5 @@
 package org.example.Models.Builders;
 
-
-import org.example.Models.BaseModel;
 import org.example.Models.Specific.CardType;
 
 public class CardTypeBuilder {

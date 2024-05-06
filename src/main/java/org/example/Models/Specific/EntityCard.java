@@ -50,4 +50,8 @@ public class EntityCard extends Card {
     public EntityCard() {
         super();
     }
+
+    public static EntityCardBuilder entityCardBuilder() {
+        return new EntityCardBuilder();
+    }
 }

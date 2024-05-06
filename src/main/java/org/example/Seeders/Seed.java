@@ -5,6 +5,7 @@ import org.example.Interfaces.ICardRepository;
 import org.example.Interfaces.IPreccenseRepository;
 import org.example.Interfaces.ITypeRepository;
 import org.example.Models.BaseModel;
+import org.example.Models.Builders.CardTypeBuilder;
 import org.example.Models.Card;
 import org.example.Models.Specific.CardType;
 import org.example.Models.Specific.EntityCard;
@@ -28,7 +29,7 @@ public class Seed {
     public Preccense PreccenseBuilder(String name, String color){
 
         /**Build the Preccense*/
-        Preccense preccense = Preccense.builder().name(name).color(color).build();
+        Preccense preccense = PreccenseBuilder(name, color);
 
         /**retornando al utilizar el sistema para añadir al edificio*/
         return preccenseRepository.addPreccenseCard(preccense);
@@ -37,7 +38,9 @@ public class Seed {
 
     public CardType TypeBuilder(String name){
         /**Build the SkillCard's type*/
-        CardType cardType = CardType.builder().name(name).build();
+        CardType cardType = new CardTypeBuilder()
+                .name(name)
+                .build();
 
         /**retornando al utilizar el sistema para añadir al edificio*/
         return typeRepository.addTypeSkillCard(cardType);

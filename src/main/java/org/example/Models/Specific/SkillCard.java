@@ -38,4 +38,8 @@ public class SkillCard extends Card {
         super();
 
     }
+
+    public static SkillCardBuilder skillCardBuilder() {
+        return new SkillCardBuilder();
+    }
 }
