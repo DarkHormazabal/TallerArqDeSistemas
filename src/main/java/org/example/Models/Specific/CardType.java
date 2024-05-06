@@ -12,23 +12,24 @@ import javax.persistence.MappedSuperclass;
  *
  * @author Matias Orellana Hormazábal.
  */
-@ToString
+@ToString(callSuper = true)
 @MappedSuperclass
 @Getter
 @Setter
-@AllArgsConstructor
 @Builder
 @Entity
 public class CardType extends BaseModel {
 
     /**
-     * The Name.
-     * All tables have name's attribute, therefore is implemented here
+     * Card Type haven't atributtes in specific, ID and name have the BaseModel
      */
-    @NotNull
-    private String name;
-    /**
-     * Card Type haven't atributtes in specific, ID  have the BaseModel
-     */
+    public CardType() {
+        super();
+    }
+
+    // Método estático para obtener una instancia del Builder
+    public static CardTypeBuilder builder() {
+        return new CardTypeBuilder();
+    }
 
 }

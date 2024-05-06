@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
  *
  * @author Matias Orellana Hormazábal.
  */
-@ToString
+@ToString(callSuper = true)
 @MappedSuperclass
 @Getter
 @Setter
@@ -22,15 +22,19 @@ import javax.persistence.MappedSuperclass;
 public class Preccense extends BaseModel {
 
     /**
-     * The Name.
-     * All tables have name's attribute, therefore is implemented here
-     */
-    @NotNull
-    private String name;
-    /**
      * The color.
      */
     @NotNull
     private String color;
+
+    // Constructor protegido para que no pueda ser instanciado directamente
+    public Preccense() {
+        super();
+    }
+
+    // Método estático para obtener una instancia del Builder
+    public static PreccenseBuilder builder() {
+        return new PreccenseBuilder();
+    }
 
 }

@@ -30,7 +30,12 @@ public abstract class BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    /**
+     * The Name.
+     * All tables have name's attribute, therefore is implemented here
+     */
+    @NotNull
+    private String name;
 
     /**
      * The Version.

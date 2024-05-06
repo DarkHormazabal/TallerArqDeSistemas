@@ -89,6 +89,19 @@ public class CardRepository implements ICardRepository {
     }
 
     @Override
+    public Card addEntityCardSeeder(Card card) {
+        this.database.save(card);
+        return card;
+    }
+
+    @Override
+    public Card addSkillCardSeeder(Card card) {
+        this.database.save(card);
+        return card;
+    }
+
+
+    @Override
     public List<CardDTO> getCards() {
 
         List<CardDTO> cardsDTO = new ArrayList<>();//initial cardsDTO

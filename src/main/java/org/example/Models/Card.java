@@ -21,12 +21,7 @@ import javax.persistence.MappedSuperclass;
 @Entity
 public abstract class Card extends BaseModel{
 
-    /**
-     * The Name.
-     * All tables have name's attribute, therefore is implemented here
-     */
-    @NotNull
-    private String name;
+
     /**
      * The level.
      */
@@ -55,5 +50,10 @@ public abstract class Card extends BaseModel{
 
     public Card() {
         this.deleted = false;
+    }
+
+    // Método estático para obtener una instancia del Builder
+    public static CardBuilder builder() {
+        return new CardBuilder();
     }
 }
