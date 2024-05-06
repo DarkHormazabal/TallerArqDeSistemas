@@ -33,4 +33,10 @@ public class PreccenseRepository implements IPreccenseRepository {
         //find the Preccense
         return database.find(Preccense.class, id);
     }
+
+    @Override
+    public Preccense addPreccenseCard(Preccense preccense) {
+        this.database.save(preccense);
+        return preccense;
+    }
 }

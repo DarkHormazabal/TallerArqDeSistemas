@@ -23,11 +23,10 @@ public class Seed {
     public Preccense PreccenseBuilder(String name, String color){
 
         /**Build the Preccense*/
-        Edificio edificio = Edificio.builder().nombre(nombre).direccion(direccion).build();
         Preccense preccense = Preccense.builder().name(name).color(color).build();
 
         /**retornando al utilizar el sistema para añadir al edificio*/
-        return sis.addEdificio(edificio);
+        return typeRepository.add;
 
     }
 

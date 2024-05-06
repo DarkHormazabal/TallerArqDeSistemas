@@ -29,4 +29,10 @@ public class TypeRepository implements ITypeRepository {
     public CardType getTypeSkillCardById(Long id) {
         return database.find(CardType.class, id);
     }
+
+    @Override
+    public CardType addTypeSkillCard(CardType card) {
+        this.database.save(card);
+        return card;
+    }
 }
