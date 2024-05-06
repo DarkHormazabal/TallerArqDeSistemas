@@ -24,12 +24,19 @@ public interface ICardRepository {
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO);
 
     /**
-     * @param restoreCardDTO to add
+     * @param findCard to add
      * @return
      */
+    public Card restoreCard(Card findCard);
 
     /**
-     * @param FindCard add
+     * @param name add
+     * @return
+     */
+    public Card Find(String name);
+
+    /**
+     * @param AddCardSeeder add
      * @return
      */
 

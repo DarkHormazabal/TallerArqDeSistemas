@@ -77,6 +77,18 @@ public class CardRepository implements ICardRepository {
     }
 
     @Override
+    public Card restoreCard(Card findCard) {
+        findCard.setDeleted(false);
+        return findCard;
+    }
+
+    @Override
+    public Card Find(String name) {
+        Card findCard = database.find(Card.class, name);
+        return findCard;
+    }
+
+    @Override
     public List<CardDTO> getCards() {
 
         List<CardDTO> cardsDTO = new ArrayList<>();//initial cardsDTO
