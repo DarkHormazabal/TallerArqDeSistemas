@@ -1,5 +1,6 @@
 package org.example.Models.Specific;
 
+import io.ebean.annotation.NotNull;
 import lombok.*;
 import org.example.Models.BaseModel;
 
@@ -21,7 +22,13 @@ import javax.persistence.MappedSuperclass;
 public class CardType extends BaseModel {
 
     /**
-     * Card Type haven't atributtes in specific, ID and name have the BaseModel
+     * The Name.
+     * All tables have name's attribute, therefore is implemented here
+     */
+    @NotNull
+    private String name;
+    /**
+     * Card Type haven't atributtes in specific, ID  have the BaseModel
      */
 
 }

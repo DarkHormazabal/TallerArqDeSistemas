@@ -22,6 +22,12 @@ import javax.persistence.MappedSuperclass;
 public class Preccense extends BaseModel {
 
     /**
+     * The Name.
+     * All tables have name's attribute, therefore is implemented here
+     */
+    @NotNull
+    private String name;
+    /**
      * The color.
      */
     @NotNull
