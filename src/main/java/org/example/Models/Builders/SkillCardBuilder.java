@@ -1,10 +1,12 @@
 package org.example.Models.Builders;
 
+import org.example.Models.Card;
 import org.example.Models.Specific.CardType;
 import org.example.Models.Specific.Preccense;
 import org.example.Models.Specific.SkillCard;
 
 public class SkillCardBuilder {
+    private Card card;
     private String name;
     private int level;
     private String description;
@@ -14,6 +16,11 @@ public class SkillCardBuilder {
     private int power;
     private Long typeID;
     private CardType cardType;
+
+    public SkillCardBuilder card(Card card) {
+        this.card = card;
+        return this;
+    }
 
     public SkillCardBuilder name(String name) {
         this.name = name;

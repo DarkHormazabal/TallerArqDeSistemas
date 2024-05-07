@@ -1,10 +1,12 @@
 package org.example.Models.Builders;
 
 
+import org.example.Models.Card;
 import org.example.Models.Specific.EntityCard;
 import org.example.Models.Specific.Preccense;
 
 public class EntityCardBuilder {
+    private Card card;
     private String name;
     private int level;
     private String description;
@@ -15,6 +17,11 @@ public class EntityCardBuilder {
     private int magicalPower;
     private int physicalProtection;
     private int magicalProtection;
+
+    public EntityCardBuilder card(Card card) {
+        this.card = card;
+        return this;
+    }
 
     public EntityCardBuilder name(String name) {
         this.name = name;
