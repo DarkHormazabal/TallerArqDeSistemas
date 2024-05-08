@@ -1,6 +1,7 @@
 package org.example.Services;
 
 import io.ebean.Database;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import java.util.List;
 @Slf4j
 @Getter
 @Setter
+@AllArgsConstructor
 public class PreccenseRepository implements IPreccenseRepository {
 
     /**
@@ -19,14 +21,6 @@ public class PreccenseRepository implements IPreccenseRepository {
      */
     private final Database database;
 
-    /**
-     * The preccense's list
-     */
-    private List<Preccense> preccenses;
-
-    public PreccenseRepository(Database database) {
-        this.database = database;
-    }
 
     @Override
     public Preccense getPreccenseById(Long id) {

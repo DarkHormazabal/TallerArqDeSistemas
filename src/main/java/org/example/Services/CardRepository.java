@@ -1,6 +1,7 @@
 package org.example.Services;
 
 import io.ebean.Database;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +18,13 @@ import org.example.Models.Card;
 import org.example.Models.Specific.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
 @Getter
 @Setter
+@AllArgsConstructor
 public class CardRepository implements ICardRepository {
 
     /**
@@ -33,11 +36,7 @@ public class CardRepository implements ICardRepository {
      * The database
      */
     private final Database database;
-
-    /**
-     * The automapper
-     */
-    private final AutoMapper autoMapper;
+    ;
 
     /**
      * The ORM's repositories
@@ -47,12 +46,6 @@ public class CardRepository implements ICardRepository {
     private final ITypeRepository typeRepository;
 
 
-    public CardRepository(Database database, AutoMapper autoMapper, IPreccenseRepository preccenseRepository, ITypeRepository typeRepository) {
-        this.database = database;
-        this.autoMapper = autoMapper;
-        this.preccenseRepository = preccenseRepository;
-        this.typeRepository = typeRepository;
-    }
 
     @Override
     public Card addEntityCard(AddEntityCardDTO addEntityCardDTO) {
