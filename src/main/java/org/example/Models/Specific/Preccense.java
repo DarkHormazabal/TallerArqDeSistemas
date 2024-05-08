@@ -12,8 +12,7 @@ import javax.persistence.MappedSuperclass;
  *
  * @author Matias Orellana Hormazábal.
  */
-@ToString
-@MappedSuperclass
+@ToString(callSuper = true)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,5 +25,7 @@ public class Preccense extends BaseModel {
      */
     @NotNull
     private String color;
+
+
 
 }

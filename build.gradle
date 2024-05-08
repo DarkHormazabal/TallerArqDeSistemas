@@ -40,13 +40,15 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
     // ebean
-    implementation 'io.ebean:ebean:13.23.1'
+    implementation 'io.ebean:ebean:13.11.0'
     implementation 'io.ebean:ebean-ddl-generator:13.23.1'
-    annotationProcessor 'io.ebean:querybean-generator:13.23.1'
+    testImplementation 'io.ebean:ebean-test:15.1.0'
+    annotationProcessor 'io.ebean:querybean-generator:13.11.0'
+
 
     // database
     implementation 'org.xerial:sqlite-jdbc:3.45.3.0'
-    // implementation 'com.h2database:h2:2.2.220'
+    implementation 'com.h2database:h2:2.2.220'
 
     // json
     implementation 'com.google.code.gson:gson:2.10.1'
@@ -68,11 +70,16 @@ dependencies {
     //dataFaker
     implementation 'net.datafaker:datafaker:2.2.2'
 
+    // Jackson Core
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.17.1'
+
     //jackson core
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
 
     //jackson module
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.17.0'
+
+
 
     //ObjectMapping
     implementation 'org.mapstruct:mapstruct:1.4.2.Final' // Reemplaza con la última versión disponible

@@ -13,13 +13,13 @@ public class SkillCardDTO extends CardDTO{
     /**
      * The power.
      */
-    @NotNull
+
     private int power;
 
     /**
      * The typeID.
      */
-    @NotNull
+
     private String typeName;
 
     public SkillCardDTO(String name, int level, String description, String namrPersistence, String colorPersistence) {

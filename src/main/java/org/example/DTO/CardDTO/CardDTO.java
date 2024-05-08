@@ -23,31 +23,31 @@ public abstract class CardDTO {
      * The Name.
      * All tables have name's attribute, therefore is implemented here
      */
-    @NotNull
+
     private String name;
 
     /**
      * The level.
      */
-    @NotNull
+
     private int level;
 
     /**
      * The description.
      */
-    @NotNull
+
     private String description;
 
     /**
      * The persistence's name.
      */
-    @NotNull
+
     private String namePersistence;
 
     /**
      * The persistence's color.
      */
-    @NotNull
+
     private String colorPersistence;
 
 }

@@ -1,9 +1,13 @@
 package org.example.Services;
 
 import io.ebean.Database;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.example.Builders.CardBuilder;
+import org.example.Builders.EntityCardBuilder;
+import org.example.Builders.SkillCardBuilder;
 import org.example.DTO.AddEntityCardDTO;
 import org.example.DTO.AddSkillCardDTO;
 import org.example.DTO.CardDTO.CardDTO;
@@ -17,11 +21,13 @@ import org.example.Models.Card;
 import org.example.Models.Specific.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
 @Getter
 @Setter
+@AllArgsConstructor
 public class CardRepository implements ICardRepository {
 
     /**
@@ -33,11 +39,7 @@ public class CardRepository implements ICardRepository {
      * The database
      */
     private final Database database;
-
-    /**
-     * The automapper
-     */
-    private final AutoMapper autoMapper;
+    ;
 
     /**
      * The ORM's repositories
@@ -46,95 +48,177 @@ public class CardRepository implements ICardRepository {
 
     private final ITypeRepository typeRepository;
 
-
-    public CardRepository(Database database, AutoMapper autoMapper, IPreccenseRepository preccenseRepository, ITypeRepository typeRepository) {
-        this.database = database;
-        this.autoMapper = autoMapper;
-        this.preccenseRepository = preccenseRepository;
-        this.typeRepository = typeRepository;
-    }
-
     @Override
     public Card addEntityCard(AddEntityCardDTO addEntityCardDTO) {
+        Preccense FoundPreccense = preccenseRepository.getPreccenseById(addEntityCardDTO.getPreccenseID());
         //automapping
-        EntityCard entityCard = AutoMapper.map(addEntityCardDTO, EntityCard.class);
+        Card card = CardBuilder.build(
+                addEntityCardDTO.getName(),
+                addEntityCardDTO.getLevel(),
+                addEntityCardDTO.getDescription(),
+                false,
+                addEntityCardDTO.getPreccenseID(),
+                FoundPreccense);
+
+        EntityCard entityCard = EntityCardBuilder.build(card
+                , addEntityCardDTO.getPhysicalPower()
+                , addEntityCardDTO.getMagicalPower()
+                , addEntityCardDTO.getPhysicalProtection(),
+                addEntityCardDTO.getMagicalProtection());
         //change your preccense
-        entityCard.setPreccense(preccenseRepository.getPreccenseById(addEntityCardDTO.getPreccenseID()));
         this.database.save(entityCard);
         return entityCard;
     }
 
     @Override
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO) {
+        Preccense FoundPreccense = preccenseRepository.getPreccenseById(addSkillCardDTO.getPreccenseID());
         //automapping
-        SkillCard skillCard = AutoMapper.map(addSkillCardDTO, SkillCard.class);
-        //change your preccense
-        skillCard.setPreccense(preccenseRepository.getPreccenseById(addSkillCardDTO.getPreccenseID()));
-        //change your cardType
-        skillCard.setCardType(typeRepository.getTypeSkillCardById(addSkillCardDTO.getTypeID()));
+        Card card = CardBuilder.build(
+                addSkillCardDTO.getName(),
+                addSkillCardDTO.getLevel(),
+                addSkillCardDTO.getDescription(),
+                false,
+                addSkillCardDTO.getPreccenseID(),
+                FoundPreccense);
+        //automapping
+        CardType foundtype = typeRepository.getTypeSkillCardById(addSkillCardDTO.getTypeID());
+        SkillCard skillCard = SkillCardBuilder.build(card,
+                addSkillCardDTO.getPower(),
+                addSkillCardDTO.getTypeID(),
+                foundtype);
         this.database.save(skillCard);
         return skillCard;
     }
 
     @Override
-    public List<CardDTO> getCards() {
-
-        List<CardDTO> cardsDTO = new ArrayList<>();//initial cardsDTO
-
-        if (cards.isEmpty()){return cardsDTO;}//is empty, return because is unnecessary do the follow process
-
-        for (Card card : cards){
-            //execute this process only when the card isn't deleted (deleted == true)
-            if (!card.isDeleted()){
-                Preccense preccense = card.getPreccense();//obtain card's preccense
-                AssignCardTypeGeneral(cardsDTO, preccense, card);
-            }
-        }
-
-        return cardsDTO;
+    public Card restoreCard(Card findCard) {
+        findCard.setDeleted(false);
+        return findCard;
     }
 
     @Override
-    public List<CardDTO> getCardsByPreccense(Long preccenseID) {
+    public Card Find(String name) {
+        Card card = database.find(SkillCard.class, name);//find tha card
+        if(card == null){
+            card = database.find(EntityCard.class, name);
+        }
+        if(card.isDeleted()) return null;
+        Preccense preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
+        card.setPreccense(preccense);
+        if(card instanceof SkillCard) {
+            CardType type = typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID());
+            ((SkillCard) card).setCardType(type);
+        }
 
+        return card;
+    }
+
+    @Override
+    public Card addEntityCardSeeder(Card card) {
+        this.database.save(card);
+        return card;
+    }
+
+    @Override
+    public Card addSkillCardSeeder(Card card) {
+        this.database.save(card);
+        return card;
+    }
+
+
+    @Override
+    public List<Card> getCards() {
+
+
+        List<EntityCard> entityCardList = this.database.find(EntityCard.class)
+                .findList(); // Supongamos que tienes una lista de EntityCard
+        List<SkillCard> skillCardList = this.database.find(SkillCard.class)
+                .findList(); // Supongamos que tienes una lista de SkillCard
+
+        List<Card> cardList = new ArrayList<>();
+        List<Card> cardList2 = new ArrayList<>();
+        cardList.addAll(entityCardList);
+        cardList.addAll(skillCardList);
+
+        for (Card card : cardList) {
+            if (!card.isDeleted()) {
+                card.setPreccense(this.preccenseRepository.getPreccenseById(card.getPreccenseID()));
+
+                if(card instanceof SkillCard) {
+
+                    ((SkillCard) card).setCardType(this.typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID()));
+
+                }
+
+                cardList2.add(card);
+            }
+        }
+
+        return cardList2;
+
+    }
+
+    @Override
+    public List<Card> getCardsByPreccense(Long preccenseID) {
+
+
+        List<EntityCard> entityCardList = this.database.find(EntityCard.class)
+                .where().eq("preccenseID", preccenseID).findList();// Supongamos que tienes una lista de EntityCard
+        List<SkillCard> skillCardList = this.database.find(SkillCard.class)
+                .where().eq("preccenseID", preccenseID).findList();
         //is similar, but preccense is found by id sent by client
-        List<CardDTO> cardsDTO = new ArrayList<>();
-        Preccense preccense = preccenseRepository.getPreccenseById(preccenseID);//obtain the preccense
+        List<Card> cardList = new ArrayList<>();
+        List<Card> cardList2 = new ArrayList<>();
+        cardList.addAll(entityCardList);
+        cardList.addAll(skillCardList);
 
-        if (cards.isEmpty() || preccense == null){return cardsDTO;}
 
-        for (Card card : cards){
-            if (!card.isDeleted()){
-                AssignCardTypeGeneral(cardsDTO, preccense, card);
+        if (cards.isEmpty()){return cardList;}
+
+        for (Card card : cardList) {
+            if (!card.isDeleted() && preccenseID.equals(card.getPreccenseID())) {
+                card.setPreccense(this.preccenseRepository.getPreccenseById(card.getPreccenseID()));
+
+                if(card instanceof SkillCard) {
+
+                    ((SkillCard) card).setCardType(this.typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID()));
+
+                }
+
+                cardList2.add(card);
             }
         }
 
-        return cardsDTO;
+        return cardList2;
     }
 
     @Override
-    public CardDTO getCardById(Long id) {
+    public Card getCardById(Long id) {
 
-        Card card = database.find(Card.class, id);//find tha card
-        if (card == null || card.isDeleted()){ return null; }
-        Preccense preccense = card.getPreccense();
-        //is similar to than others gets, but don't use the method "AssignCardTypeGeneral"
-        //because isn't list
-        if (card instanceof EntityCard){
-
-            return AssignEntityCard(preccense, card);
-
-        } else {
-            return AssignSkillCard(preccense, card);
+        Card card = database.find(SkillCard.class, id);//find tha card
+        if(card == null){
+            card = database.find(EntityCard.class, id);
         }
+        if(card.isDeleted()) return null;
+        Preccense preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
+        card.setPreccense(preccense);
+        if(card instanceof SkillCard) {
+            CardType type = typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID());
+            ((SkillCard) card).setCardType(type);
+        }
+
+        return card;
     }
 
     @Override
     public boolean deleteCard(Long id) {
-        Card card = database.find(Card.class, id);//find the card
-        if (card == null || card.isDeleted()){ return false; }
-        card.setDeleted(true);
-        this.database.save(card);
+        Card card = database.find(SkillCard.class, id);//find tha card
+        if(card == null){
+            card = database.find(EntityCard.class, id);
+        }
+        if (card == null){ return false; }
+        this.database.delete(card);
         return true;
     }
 

@@ -16,7 +16,6 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @Setter
-@Builder
 @Entity
 public class SkillCard extends Card {
 
@@ -30,14 +29,15 @@ public class SkillCard extends Card {
      * The typeID.
      */
     @NotNull
-    private long typeID;
+    private Long typeID;
 
     private CardType cardType;
 
-    public SkillCard(int level, String description, boolean deleted, Long preccenseID, Preccense preccense, int power, long typeID, CardType cardType) {
+    public SkillCard(String name, int level, String description, boolean deleted, Long preccenseID, Preccense preccense, int power, Long typeID, CardType cardType) {
         super(level, description, deleted, preccenseID, preccense);
         this.power = power;
         this.typeID = typeID;
         this.cardType = cardType;
+        this.setName(name);
     }
 }

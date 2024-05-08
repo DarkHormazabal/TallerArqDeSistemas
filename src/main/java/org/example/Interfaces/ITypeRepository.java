@@ -3,6 +3,8 @@ package org.example.Interfaces;
 import org.example.Models.Specific.CardType;
 import org.example.Models.Specific.Preccense;
 
+import java.util.List;
+
 public interface ITypeRepository {
 
     /**
@@ -12,4 +14,5 @@ public interface ITypeRepository {
      */
     public CardType getTypeSkillCardById(Long id);
 
+    public void addTypeSkillCard(CardType cardType);
 }

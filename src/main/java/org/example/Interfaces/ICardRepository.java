@@ -24,35 +24,47 @@ public interface ICardRepository {
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO);
 
     /**
-     * @param restoreCardDTO to add
+     * @param findCard to add
      * @return
      */
+    public Card restoreCard(Card findCard);
 
     /**
-     * @param FindCard add
+     * @param name add
      * @return
      */
+    public Card Find(String name);
 
+    /**
+     * @param card add
+     * @return
+     */
+    public Card addEntityCardSeeder(Card card);
 
+    /**
+     * @param card add
+     * @return
+     */
+    public Card addSkillCardSeeder(Card card);
     /**
      * @return
      * show cards in general
      */
-    public List<CardDTO> getCards();
+    public List<Card> getCards();
 
     /**
      * @return
      * @param preccenseID to view
      * show cards by preccenseID
      */
-    public List<CardDTO> getCardsByPreccense(Long preccenseID);
+    public List<Card> getCardsByPreccense(Long preccenseID);
 
     /**
      * @return
      * @param id to view
      * show cards by id
      */
-    public CardDTO getCardById(Long id);
+    public Card getCardById(Long id);
 
     /**
      * @return

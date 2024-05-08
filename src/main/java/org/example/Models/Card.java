@@ -2,6 +2,7 @@ package org.example.Models;
 
 import io.ebean.annotation.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.example.Models.Specific.Preccense;
 
 import javax.persistence.Entity;
@@ -18,8 +19,8 @@ import javax.persistence.MappedSuperclass;
 @Setter
 @AllArgsConstructor
 @Builder
-@Entity
-public abstract class Card extends BaseModel{
+public class Card extends BaseModel{
+
 
     /**
      * The level.
@@ -47,7 +48,4 @@ public abstract class Card extends BaseModel{
 
     private Preccense preccense;
 
-    public Card() {
-        this.deleted = false;
-    }
 }

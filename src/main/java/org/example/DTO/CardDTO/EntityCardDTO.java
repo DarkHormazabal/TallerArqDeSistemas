@@ -16,25 +16,25 @@ public class EntityCardDTO extends CardDTO{
     /**
      * The physicalPower.
      */
-    @NotNull
+
     private int physicalPower;
 
     /**
      * The magicalPower.
      */
-    @NotNull
+
     private int magicalPower;
 
     /**
      * The physicalProtection.
      */
-    @NotNull
+
     private int physicalProtection;
 
     /**
      * The magicalProtection.
      */
-    @NotNull
+
     private int magicalProtection;
 
     public EntityCardDTO(String name, int level, String description, String namrPersistence, String colorPersistence) {
