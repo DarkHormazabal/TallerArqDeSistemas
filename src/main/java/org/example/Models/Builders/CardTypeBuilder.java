@@ -10,7 +10,7 @@ import org.example.Models.Specific.CardType;
 public class CardTypeBuilder {
     private String name;
 
-    public CardType build(String name) {
+    public static CardType build(String name) {
         CardType cardType = CardType.builder().build();
         cardType.setName(name);
         return cardType;

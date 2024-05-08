@@ -12,7 +12,7 @@ import org.example.Models.Specific.Preccense;
 @SuperBuilder
 public class EntityCardBuilder {
 
-    public EntityCard build(Card card, int physicalPower, int magicalPower, int physicalProtection, int magicalProtection) {
+    public static EntityCard build(Card card, int physicalPower, int magicalPower, int physicalProtection, int magicalProtection) {
         EntityCard entityCard = EntityCard.builder().magicalPower(magicalPower)
                 .magicalProtection(magicalProtection)
                 .physicalPower(physicalPower)

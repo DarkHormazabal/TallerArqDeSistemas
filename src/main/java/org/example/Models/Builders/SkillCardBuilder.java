@@ -11,7 +11,7 @@ import org.example.Models.Specific.SkillCard;
 @SuperBuilder
 public class SkillCardBuilder extends CardBuilder {
 
-    public SkillCard build(Card card, int power, int typeID, CardType cardType) {
+    public static SkillCard build(Card card, int power, int typeID, CardType cardType) {
         SkillCard skillCard = SkillCard.builder().power(power)
                 .typeID(typeID)
                 .cardType(cardType)
