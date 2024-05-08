@@ -2,11 +2,16 @@ package org.example;
 
 import io.javalin.Javalin;
 import lombok.extern.slf4j.Slf4j;
-import org.example.Controllers.CardController;
 import io.ebean.DB;
 import io.ebean.Database;
+import org.example.Interfaces.ICardRepository;
+import org.example.Seeders.Seed;
+import org.example.Services.CardRepository;
+import org.example.Services.PreccenseRepository;
+import org.example.Services.TypeRepository;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * The Main
@@ -20,7 +25,7 @@ import java.io.IOException;
 //la hora, todo
 public class Main {
 
-    public static Javalin createAndConfigureJavalin() {
+    public static Javalin createAndConfigureJavalin(CardRepository cardRepository) {
         Javalin app = Javalin.create();
 
         // Configuraciones adicionales después de la creación de la instancia
@@ -41,12 +46,30 @@ public class Main {
             log.debug("Done. ^^");
         });
 
+        app.get("/Cards", ctx -> {
+
+            ctx.json(cardRepository.getCards());
+
+        });
+
+        app.post("/Cards", ctx -> {
+
+        });
+
+        app.put("/Cards/id", ctx -> {
+
+        });
+
+        app.delete("/Cards/id", ctx -> {
+
+        });
+
         // Define tus rutas y manejadores aquí utilizando app.get(), app.post(), etc.
 
         return app;
     }
 
-    public static Javalin start(final int port){
+    public static Javalin start(final int port, CardRepository cardRepository){
 
         if (port < 1024 || port > 65535){
 
@@ -57,7 +80,7 @@ public class Main {
         log.debug("Starting api rest server in port {} ..", port);
 
         //the server
-        Javalin app = createAndConfigureJavalin();
+        Javalin app = createAndConfigureJavalin(cardRepository);
 
 
         //the hookup thread
@@ -92,21 +115,26 @@ public class Main {
 
         Database db = DB.getDefault();//crea la base de datos
 
-        CardController cardController = new CardController(db);
+        PreccenseRepository preccenseRepository = new PreccenseRepository(db);
 
-        try {
+        TypeRepository typeRepository = new TypeRepository(db);
 
-            cardController.LoadSeeders();
-            log.debug("Beginning app...");
+        CardRepository cardRepository = new CardRepository(new LinkedList<>(), db, preccenseRepository, typeRepository);
 
 
-            /**are as controllers*/
-            Javalin app = start(2026);
 
-        } catch (IOException e){
-            log.error("Error loading seeders.");
+        /**cargan los seeders*/
+        Seed seeders = new Seed(cardRepository, preccenseRepository, typeRepository);
+        seeders.Seeders();
 
-        }
+        log.debug("loaded the database...");
+        log.debug("Beginning app...");
+
+
+        /**are as controllers*/
+        Javalin app = start(2026, cardRepository);
+
+
 
 
         /**Esto apunta al puerto, es similar a los controladores de software donde utiliza un http y con esa

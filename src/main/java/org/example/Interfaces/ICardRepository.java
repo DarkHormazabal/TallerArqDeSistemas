@@ -50,7 +50,7 @@ public interface ICardRepository {
      * @return
      * show cards in general
      */
-    public List<CardDTO> getCards();
+    public List<Card> getCards();
 
     /**
      * @return

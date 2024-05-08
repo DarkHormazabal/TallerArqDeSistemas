@@ -95,21 +95,36 @@ public class CardRepository implements ICardRepository {
 
 
     @Override
-    public List<CardDTO> getCards() {
+    public List<Card> getCards() {
 
-        List<CardDTO> cardsDTO = new ArrayList<>();//initial cardsDTO
 
-        if (cards.isEmpty()){return cardsDTO;}//is empty, return because is unnecessary do the follow process
+        List<EntityCard> entityCardList = this.database.find(EntityCard.class).fetch("preccense")
+                .findList();; // Supongamos que tienes una lista de EntityCard
+        List<SkillCard> skillCardList = this.database.find(SkillCard.class)
+                .fetch("preccense")
+                .findList(); // Supongamos que tienes una lista de SkillCard
 
-        for (Card card : cards){
-            //execute this process only when the card isn't deleted (deleted == true)
-            if (!card.isDeleted()){
-                Preccense preccense = card.getPreccense();//obtain card's preccense
-                AssignCardTypeGeneral(cardsDTO, preccense, card);
+        List<Card> cardList = new ArrayList<>();
+        List<Card> cardList2 = new ArrayList<>();
+        cardList.addAll(entityCardList);
+        cardList.addAll(skillCardList);
+
+        for (Card card : cardList) {
+            if (!card.isDeleted()) {
+                card.setPreccense(this.preccenseRepository.getPreccenseById(card.getPreccenseID()));
+
+                if(card instanceof SkillCard) {
+
+                    ((SkillCard) card).setCardType(this.typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID()));
+
+                }
+
+                cardList2.add(card);
             }
         }
 
-        return cardsDTO;
+        return cardList2;
+
     }
 
     @Override
