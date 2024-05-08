@@ -5,6 +5,8 @@ import org.example.DTO.CardDTO.CardDTO;
 import org.example.Models.Card;
 import org.example.Models.Specific.Preccense;
 
+import java.util.List;
+
 public interface IPreccenseRepository {
 
     /**
@@ -14,6 +16,6 @@ public interface IPreccenseRepository {
      */
     public Preccense getPreccenseById(Long id);
 
-    public Preccense addPreccenseCard(Preccense preccense);
+    public void addPreccenseCard(List<Preccense> preccenses);
 
 }

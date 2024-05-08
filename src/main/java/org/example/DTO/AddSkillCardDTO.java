@@ -32,14 +32,9 @@ public class AddSkillCardDTO {
     @NotNull
     private String description;
 
-    /**
-     * The deleted.
-     */
-    @NotNull
-    private boolean deleted;
 
     /**
-     * The deleted.
+     * The preccenseID.
      */
     @NotNull
     private Long preccenseID;

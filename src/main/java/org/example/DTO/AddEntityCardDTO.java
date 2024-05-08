@@ -31,12 +31,7 @@ public class AddEntityCardDTO {
      */
     @NotNull
     private String description;
-
-    /**
-     * The deleted.
-     */
-    @NotNull
-    private boolean deleted;
+    
 
     /**
      * The deleted.

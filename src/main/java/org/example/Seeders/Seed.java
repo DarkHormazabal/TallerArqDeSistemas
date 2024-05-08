@@ -1,5 +1,9 @@
 package org.example.Seeders;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.ebean.Database;
+import lombok.AllArgsConstructor;
 import org.example.Interfaces.ICardRepository;
 import org.example.Interfaces.IPreccenseRepository;
 import org.example.Interfaces.ITypeRepository;
@@ -9,7 +13,14 @@ import org.example.Models.Specific.CardType;
 import org.example.Models.Specific.EntityCard;
 import org.example.Models.Specific.Preccense;
 import org.example.Models.Specific.SkillCard;
+import org.example.Services.TypeRepository;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
+
+@AllArgsConstructor
 public class Seed {
 
     private ICardRepository cardRepository;
@@ -18,33 +29,37 @@ public class Seed {
 
     private ITypeRepository typeRepository;
 
-    public Seed(ICardRepository cardRepository, IPreccenseRepository preccenseRepository, ITypeRepository typeRepository) {
-        this.cardRepository = cardRepository;
-        this.preccenseRepository = preccenseRepository;
-        this.typeRepository = typeRepository;
-    }
+
+    public void Seeders() throws IOException {
 
 
+            // Crear un ObjectMapper (parte de Jackson)
+            ObjectMapper objectMapper = new ObjectMapper();
 
-    public void Seed(){
+            // Leer el archivo JSON y mapearlo a una lista de objetos User
+            File file = new File("TypesCard.JSON");
+            List<CardType> typeList = objectMapper.readValue(file, new TypeReference<>(){});
 
-        //the preccenses
-        Preccense preccense1 = PreccenseBuilder.build("Fuego", "Rojo");
-        Preccense preccense2 = PreccenseBuilder.build("Tierra", "Verde");
-        Preccense preccense3 = PreccenseBuilder.build("Aire", "Morado");
-        Preccense preccense4 = PreccenseBuilder.build("Agua", "Azul");
-        Preccense preccense5 = PreccenseBuilder.build("Éter", "Amarillo");
-        Preccense preccense6 = PreccenseBuilder.build("Santo", "Blanco");
-        Preccense preccense7 = PreccenseBuilder.build("Destrucción", "Gris Oscuro");
+            // Iterar sobre la lista de usuarios y imprimir sus atributos
+            this.typeRepository.addTypeSkillCard(typeList);
 
-        //the skillcard'types
-        CardType cardType1 = CardTypeBuilder.build("Physical");
-        CardType cardType2 = CardTypeBuilder.build("Magical");
+            File file2 = new File("Preccenses.JSON");
+            List<Preccense> preccenseList = objectMapper.readValue(file2, new TypeReference<>(){});
+            this.preccenseRepository.addPreccenseCard(preccenseList);
 
-        //the CardBuilders
-        Card card1 = CardBuilder.build("Bola de fuego", 2,"Hechizo", false, 1L, preccense1);
-        Card card2 =
 
+            File file3 = new File("EntityCards.JSON");
+            List<EntityCard> entityCardList = objectMapper.readValue(file3, new TypeReference<>(){});
+
+            for (EntityCard entityCard : entityCardList) {
+                this.cardRepository.addEntityCardSeeder(entityCard);
+            }
+
+            File file4 = new File("SkillCards.JSON");
+            List<SkillCard> skillCardList = objectMapper.readValue(file4, new TypeReference<>(){});
+            for (SkillCard skillCard : skillCardList) {
+                this.cardRepository.addEntityCardSeeder(skillCard);
+            }
 
     }
 

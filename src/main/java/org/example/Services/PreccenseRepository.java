@@ -35,8 +35,7 @@ public class PreccenseRepository implements IPreccenseRepository {
     }
 
     @Override
-    public Preccense addPreccenseCard(Preccense preccense) {
-        this.database.save(preccense);
-        return preccense;
+    public void addPreccenseCard(List<Preccense> preccenses) {
+        this.database.insertAll(preccenses);
     }
 }
