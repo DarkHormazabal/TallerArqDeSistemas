@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "7e7dc0ff-cbf5-4829-a402-af163dcfdfd2",
+		"name": "TallerArqDeSistemas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25748462"
+	},
+	"item": [
+		{
+			"name": "Cards",
+			"item": [
+				{
+					"name": "GetCards",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/Cards",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"Cards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCardsbyPreccense",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/Cards/preccense/3",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"Cards",
+								"preccense",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddEntityCard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Dragón de Fuego\",\r\n    \"level\": 5,\r\n    \"description\": \"Un dragón legendario que respira fuego.\",\r\n    \"preccenseID\": 3,\r\n    \"physicalPower\": 90,\r\n    \"magicalPower\": 85,\r\n    \"physicalProtection\": 75,\r\n    \"magicalProtection\": 80\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/Cards/entity",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"Cards",
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddSkillCard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Arco Elfico\",\r\n    \"level\": 3,\r\n    \"description\": \"Un arco hecho con madera de los árboles élficos, imbuido con magia de la naturaleza.\",\r\n    \"preccenseID\": 3,\r\n    \"power\": 40,\r\n    \"typeID\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/Cards/skill",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"Cards",
+								"skill"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindCardByID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/Cards/9",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"Cards",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindCardByName",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/Cards/Cataclismo",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"Cards",
+								"Cataclismo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCard",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/Cards/10",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"Cards",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "salir",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/salir",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"salir"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api",
+			"value": "http://localhost:2026",
+			"type": "string"
+		}
+	]
+}
