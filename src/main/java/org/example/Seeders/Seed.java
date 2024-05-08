@@ -1,15 +1,12 @@
 package org.example.Seeders;
 
-import io.ebeaninternal.server.deploy.BeanDescriptor;
 import org.example.Interfaces.ICardRepository;
 import org.example.Interfaces.IPreccenseRepository;
 import org.example.Interfaces.ITypeRepository;
-import org.example.Models.BaseModel;
 import org.example.Models.Builders.CardTypeBuilder;
-import org.example.Models.Builders.ConcreteCardBuilder;
+import org.example.Models.Builders.CardBuilder;
 import org.example.Models.Builders.EntityCardBuilder;
 import org.example.Models.Builders.SkillCardBuilder;
-import org.example.Models.Card;
 import org.example.Models.Concretes.ConcreteCard;
 import org.example.Models.Specific.CardType;
 import org.example.Models.Specific.EntityCard;
@@ -54,7 +51,7 @@ public class Seed {
             , Long preccenseID, Preccense preccense, int physicalPower, int magicalPower
             , int physicalProtection, int magicalProtection){
         // Primero, creamos un objeto Card utilizando su Builder
-        ConcreteCardBuilder cardBuilder = new ConcreteCardBuilder();
+        CardBuilder cardBuilder = new CardBuilder();
         ConcreteCard card = cardBuilder.name(name)
                 .description(description)
                 .preccenseID(preccenseID)
@@ -83,7 +80,7 @@ public class Seed {
             , Long preccenseID, Preccense preccense, int power, long typeID, CardType cardType){
 
         // Primero, creamos un objeto Card utilizando su Builder
-        ConcreteCardBuilder cardBuilder = new ConcreteCardBuilder();
+        CardBuilder cardBuilder = new CardBuilder();
         ConcreteCard card = cardBuilder.name(name)
                 .description(description)
                 .preccenseID(preccenseID)
@@ -105,6 +102,27 @@ public class Seed {
 
         return skillCard;
     }
+
+    public void Seed(){
+
+        //the preccenses
+        Preccense preccense1 = PreccenseBuilder("Fuego", "Rojo");
+        Preccense preccense2 = PreccenseBuilder("Tierra", "Verde");
+        Preccense preccense3 = PreccenseBuilder("Aire", "Morado");
+        Preccense preccense4 = PreccenseBuilder("Agua", "Azul");
+        Preccense preccense5 = PreccenseBuilder("Éter", "Amarillo");
+        Preccense preccense6 = PreccenseBuilder("Santo", "Blanco");
+        Preccense preccense7 = PreccenseBuilder("Destrucción", "Gris Oscuro");
+
+        //the skillcard'types
+        CardType cardType1 = TypeBuilder("Physical");
+        CardType cardType2 = TypeBuilder("Magical");
+
+
+
+    }
+
+
 
 
 }
