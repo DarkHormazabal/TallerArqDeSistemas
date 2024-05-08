@@ -1,0 +1,9 @@
+[
+  {"name": "Fuego", "color": "Rojo"},
+  {"name": "Tierra", "color": "Verde"},
+  {"name": "Aire", "color": "Morado"},
+  {"name": "Agua", "color": "Azul"},
+  {"name": "Éter", "color": "Amarillo"},
+  {"name": "Santo", "color": "Blanco"},
+  {"name": "Destrucción", "color": "Gris Oscuro"}
+]
