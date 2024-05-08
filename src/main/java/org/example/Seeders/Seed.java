@@ -4,6 +4,7 @@ import org.example.Interfaces.ICardRepository;
 import org.example.Interfaces.IPreccenseRepository;
 import org.example.Interfaces.ITypeRepository;
 import org.example.Models.Builders.*;
+import org.example.Models.Card;
 import org.example.Models.Specific.CardType;
 import org.example.Models.Specific.EntityCard;
 import org.example.Models.Specific.Preccense;
@@ -29,17 +30,20 @@ public class Seed {
 
         //the preccenses
         Preccense preccense1 = PreccenseBuilder.build("Fuego", "Rojo");
-        Preccense preccense2 = PreccenseBuilder("Tierra", "Verde");
-        Preccense preccense3 = PreccenseBuilder("Aire", "Morado");
-        Preccense preccense4 = PreccenseBuilder("Agua", "Azul");
-        Preccense preccense5 = PreccenseBuilder("Éter", "Amarillo");
-        Preccense preccense6 = PreccenseBuilder("Santo", "Blanco");
-        Preccense preccense7 = PreccenseBuilder("Destrucción", "Gris Oscuro");
+        Preccense preccense2 = PreccenseBuilder.build("Tierra", "Verde");
+        Preccense preccense3 = PreccenseBuilder.build("Aire", "Morado");
+        Preccense preccense4 = PreccenseBuilder.build("Agua", "Azul");
+        Preccense preccense5 = PreccenseBuilder.build("Éter", "Amarillo");
+        Preccense preccense6 = PreccenseBuilder.build("Santo", "Blanco");
+        Preccense preccense7 = PreccenseBuilder.build("Destrucción", "Gris Oscuro");
 
         //the skillcard'types
-        CardType cardType1 = TypeBuilder("Physical");
-        CardType cardType2 = TypeBuilder("Magical");
+        CardType cardType1 = CardTypeBuilder.build("Physical");
+        CardType cardType2 = CardTypeBuilder.build("Magical");
 
+        //the CardBuilders
+        Card card1 = CardBuilder.build("Bola de fuego", 2,"Hechizo", false, 1L, preccense1);
+        Card card2 =
 
 
     }

@@ -8,7 +8,6 @@ import org.example.Models.Specific.CardType;
 @Data
 @SuperBuilder
 public class CardTypeBuilder {
-    private String name;
 
     public static CardType build(String name) {
         CardType cardType = CardType.builder().build();

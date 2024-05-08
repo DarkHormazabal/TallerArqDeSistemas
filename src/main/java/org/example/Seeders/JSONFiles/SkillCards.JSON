@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Espada Mágica",
+    "level": 3,
+    "description": "Una espada encantada con magia antigua que aumenta el poder de su portador.",
+    "deleted": false,
+    "preccense": {"name": "Éter", "color": "Amarillo"},
+    "power": 35,
+    "typeID": 1
+  },
+  {
+    "name": "Báculo Arcano",
+    "level": 4,
+    "description": "Un báculo tallado con runas arcanas que amplifica los hechizos de su portador.",
+    "deleted": false,
+    "preccense": {"name": "Éter", "color": "Amarillo"},
+    "power": 40,
+    "typeID": 2
+  },
+  {
+    "name": "Armadura del Dragón",
+    "level": 3,
+    "description": "Una armadura forjada con escamas de dragón que otorga una defensa sobrenatural.",
+    "deleted": false,
+    "preccense": {"name": "Tierra", "color": "Verde"},
+    "power": 25,
+    "typeID": 1
+  },
+  {
+    "name": "Anillo de la Serpiente",
+    "level": 4,
+    "description": "Un anillo imbuido con el poder de una serpiente mística que incrementa la destreza de su portador.",
+    "deleted": false,
+    "preccense": {"name": "Tierra", "color": "Verde"},
+    "power": 30,
+    "typeID": 2
+  },
+  {
+    "name": "Espada de Luz",
+    "level": 2,
+    "description": "Una espada imbuida con la energía de la luz que purifica el mal.",
+    "deleted": false,
+    "preccense": {"name": "Santo", "color": "Blanco"},
+    "power": 30,
+    "typeID": 1
+  },
+  {
+    "name": "Capa de Invisibilidad",
+    "level": 3,
+    "description": "Una capa mágica que otorga a su portador el poder de volverse invisible.",
+    "deleted": false,
+    "preccense": {"name": "Aire", "color": "Morado"},
+    "power": 25,
+    "typeID": 2
+  },
+  {
+    "name": "Piedra de Resurrección",
+    "level": 4,
+    "description": "Una piedra mística capaz de revivir a los caídos una vez por batalla.",
+    "deleted": false,
+    "preccense": {"name": "Santo", "color": "Blanco"},
+    "power": 40,
+    "typeID": 1
+  },
+  {
+    "name": "Amuleto de Protección",
+    "level": 2,
+    "description": "Un amuleto encantado que protege a su portador de los ataques mágicos.",
+    "deleted": false,
+    "preccense": {"name": "Tierra", "color": "Verde"},
+    "power": 20,
+    "typeID": 2
+  }
+]
