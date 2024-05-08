@@ -4,6 +4,8 @@ import io.javalin.Javalin;
 import lombok.extern.slf4j.Slf4j;
 import io.ebean.DB;
 import io.ebean.Database;
+import org.example.DTO.AddEntityCardDTO;
+import org.example.DTO.AddSkillCardDTO;
 import org.example.Interfaces.ICardRepository;
 import org.example.Seeders.Seed;
 import org.example.Services.CardRepository;
@@ -52,7 +54,7 @@ public class Main {
 
         });
 
-        app.get("/Cards/{preccenseID}", ctx -> {
+        app.get("/Cards/preccense/{preccenseID}", ctx -> {
             // Obtener el valor del parámetro "preccenseID" de la URL
             Long preccenseID = Long.parseLong(ctx.pathParam("preccenseID"));
 
@@ -60,8 +62,32 @@ public class Main {
             ctx.json(cardRepository.getCardsByPreccense(preccenseID));
         });
 
-        app.post("/Cards", ctx -> {
+        app.get("/Cards/{id}", ctx -> {
 
+            // Llamar a cardRepository.getCardsByPreccense con el preccenseID
+            ctx.json(cardRepository.getCardById(Long.parseLong(ctx.pathParam("id"))));
+        });
+
+        app.post("/Cards/entity", ctx -> {
+            // Parsear el cuerpo de la solicitud a un objeto AddEntityCardDTO
+            AddEntityCardDTO dto = ctx.bodyAsClass(AddEntityCardDTO.class);
+
+            // Llamar a cardRepository.addEntityCard con el objeto dto
+            cardRepository.addEntityCard(dto);
+
+            // Responder con un código de estado apropiado, por ejemplo 201 para Created
+            ctx.status(201);
+        });
+
+        app.post("/Cards/skill", ctx -> {
+            // Parsear el cuerpo de la solicitud a un objeto AddSkillCardDTO
+            AddSkillCardDTO dto = ctx.bodyAsClass(AddSkillCardDTO.class);
+
+            // Llamar a cardRepository.addSkillCard con el objeto dto
+            cardRepository.addSkillCard(dto);
+
+            // Responder con un código de estado apropiado, por ejemplo 201 para Created
+            ctx.status(201);
         });
 
         app.put("/Cards/id", ctx -> {

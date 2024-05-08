@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.example.Builders.CardBuilder;
+import org.example.Builders.EntityCardBuilder;
+import org.example.Builders.SkillCardBuilder;
 import org.example.DTO.AddEntityCardDTO;
 import org.example.DTO.AddSkillCardDTO;
 import org.example.DTO.CardDTO.CardDTO;
@@ -45,26 +48,45 @@ public class CardRepository implements ICardRepository {
 
     private final ITypeRepository typeRepository;
 
-
-
     @Override
     public Card addEntityCard(AddEntityCardDTO addEntityCardDTO) {
+        Preccense FoundPreccense = preccenseRepository.getPreccenseById(addEntityCardDTO.getPreccenseID());
         //automapping
-        EntityCard entityCard = AutoMapper.map(addEntityCardDTO, EntityCard.class);
+        Card card = CardBuilder.build(
+                addEntityCardDTO.getName(),
+                addEntityCardDTO.getLevel(),
+                addEntityCardDTO.getDescription(),
+                false,
+                addEntityCardDTO.getPreccenseID(),
+                FoundPreccense);
+
+        EntityCard entityCard = EntityCardBuilder.build(card
+                , addEntityCardDTO.getPhysicalPower()
+                , addEntityCardDTO.getMagicalPower()
+                , addEntityCardDTO.getPhysicalProtection(),
+                addEntityCardDTO.getMagicalProtection());
         //change your preccense
-        entityCard.setPreccense(preccenseRepository.getPreccenseById(addEntityCardDTO.getPreccenseID()));
         this.database.save(entityCard);
         return entityCard;
     }
 
     @Override
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO) {
+        Preccense FoundPreccense = preccenseRepository.getPreccenseById(addSkillCardDTO.getPreccenseID());
         //automapping
-        SkillCard skillCard = AutoMapper.map(addSkillCardDTO, SkillCard.class);
-        //change your preccense
-        skillCard.setPreccense(preccenseRepository.getPreccenseById(addSkillCardDTO.getPreccenseID()));
-        //change your cardType
-        skillCard.setCardType(typeRepository.getTypeSkillCardById(addSkillCardDTO.getTypeID()));
+        Card card = CardBuilder.build(
+                addSkillCardDTO.getName(),
+                addSkillCardDTO.getLevel(),
+                addSkillCardDTO.getDescription(),
+                false,
+                addSkillCardDTO.getPreccenseID(),
+                FoundPreccense);
+        //automapping
+        CardType foundtype = typeRepository.getTypeSkillCardById(addSkillCardDTO.getTypeID());
+        SkillCard skillCard = SkillCardBuilder.build(card,
+                addSkillCardDTO.getPower(),
+                addSkillCardDTO.getTypeID(),
+                foundtype);
         this.database.save(skillCard);
         return skillCard;
     }
@@ -163,20 +185,19 @@ public class CardRepository implements ICardRepository {
     }
 
     @Override
-    public CardDTO getCardById(Long id) {
+    public Card getCardById(Long id) {
 
-        Card card = database.find(Card.class, id);//find tha card
-        if (card == null || card.isDeleted()){ return null; }
-        Preccense preccense = card.getPreccense();
-        //is similar to than others gets, but don't use the method "AssignCardTypeGeneral"
-        //because isn't list
-        if (card instanceof EntityCard){
-
-            return AssignEntityCard(preccense, card);
-
-        } else {
-            return AssignSkillCard(preccense, card);
+        Card card = database.find(SkillCard.class, id);//find tha card
+        if(card == null){
+            card = database.find(EntityCard.class, id);
         }
+        Preccense preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
+        card.setPreccense(preccense);
+        if(card instanceof SkillCard) {
+            CardType type = typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID());
+            ((SkillCard) card).setCardType(type);
+        }
+        return card;
     }
 
     @Override

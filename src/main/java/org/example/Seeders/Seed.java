@@ -171,42 +171,42 @@ public class Seed {
             //SkillCards
             Card card22 = CardBuilder.build("Espada Mágica", 3, "Una espada encantada con magia antigua que aumenta el poder de su portador.",
                     false, 4L, preccense1);
-            SkillCard skillCard1 = SkillCardBuilder.build(card22, 35, 1, type1);
+            SkillCard skillCard1 = SkillCardBuilder.build(card22, 35, 1L, type1);
             this.cardRepository.addSkillCardSeeder(skillCard1);
 
             Card card23 = CardBuilder.build("Báculo Arcano", 4, "Un báculo tallado con runas arcanas que amplifica los hechizos de su portador.",
                     false, 4L, preccense1);
-            SkillCard skillCard2 = SkillCardBuilder.build(card23, 40, 2, type2);
+            SkillCard skillCard2 = SkillCardBuilder.build(card23, 40, 2L, type2);
             this.cardRepository.addSkillCardSeeder(skillCard2);
 
             Card card24 = CardBuilder.build("Armadura del Dragón", 3, "Una armadura forjada con escamas de dragón que otorga una defensa sobrenatural.",
                     false, 3L, preccense2);
-            SkillCard skillCard3 = SkillCardBuilder.build(card24, 25, 1, type1);
+            SkillCard skillCard3 = SkillCardBuilder.build(card24, 25, 1L, type1);
             this.cardRepository.addSkillCardSeeder(skillCard3);
 
             Card card25 = CardBuilder.build("Anillo de la Serpiente", 4, "Un anillo imbuido con el poder de una serpiente mística que incrementa la destreza de su portador.",
                     false, 4L, preccense2);
-            SkillCard skillCard4 = SkillCardBuilder.build(card25, 30, 2, type2);
+            SkillCard skillCard4 = SkillCardBuilder.build(card25, 30, 2L, type2);
             this.cardRepository.addSkillCardSeeder(skillCard4);
 
             Card card26 = CardBuilder.build("Espada de Luz", 2, "Una espada imbuida con la energía de la luz que purifica el mal.",
                     false, 2L, preccense3);
-            SkillCard skillCard5 = SkillCardBuilder.build(card26, 30, 1, type1);
+            SkillCard skillCard5 = SkillCardBuilder.build(card26, 30, 1L, type1);
             this.cardRepository.addSkillCardSeeder(skillCard5);
 
             Card card27 = CardBuilder.build("Capa de Invisibilidad", 3, "Una capa mágica que otorga a su portador el poder de volverse invisible.",
                     false, 3L, preccense4);
-            SkillCard skillCard6 = SkillCardBuilder.build(card27, 25, 2, type2);
+            SkillCard skillCard6 = SkillCardBuilder.build(card27, 25, 2L, type2);
             this.cardRepository.addSkillCardSeeder(skillCard6);
 
             Card card28 = CardBuilder.build("Piedra de Resurrección", 4, "Una piedra mística capaz de revivir a los caídos una vez por batalla.",
                     false, 4L, preccense3);
-            SkillCard skillCard7 = SkillCardBuilder.build(card28, 40, 1, type1);
+            SkillCard skillCard7 = SkillCardBuilder.build(card28, 40, 1L, type1);
             this.cardRepository.addSkillCardSeeder(skillCard7);
 
             Card card29 = CardBuilder.build("Amuleto de Protección", 2, "Un amuleto encantado que protege a su portador de los ataques mágicos.",
                     false, 2L, preccense2);
-            SkillCard skillCard8 = SkillCardBuilder.build(card29, 20, 2, type2);
+            SkillCard skillCard8 = SkillCardBuilder.build(card29, 20, 2L, type2);
             this.cardRepository.addSkillCardSeeder(skillCard8);
 
     }

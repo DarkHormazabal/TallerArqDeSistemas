@@ -64,7 +64,7 @@ public interface ICardRepository {
      * @param id to view
      * show cards by id
      */
-    public CardDTO getCardById(Long id);
+    public Card getCardById(Long id);
 
     /**
      * @return
