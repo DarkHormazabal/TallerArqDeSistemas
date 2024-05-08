@@ -98,10 +98,9 @@ public class CardRepository implements ICardRepository {
     public List<Card> getCards() {
 
 
-        List<EntityCard> entityCardList = this.database.find(EntityCard.class).fetch("preccense")
-                .findList();; // Supongamos que tienes una lista de EntityCard
+        List<EntityCard> entityCardList = this.database.find(EntityCard.class)
+                .findList(); // Supongamos que tienes una lista de EntityCard
         List<SkillCard> skillCardList = this.database.find(SkillCard.class)
-                .fetch("preccense")
                 .findList(); // Supongamos que tienes una lista de SkillCard
 
         List<Card> cardList = new ArrayList<>();
@@ -128,21 +127,39 @@ public class CardRepository implements ICardRepository {
     }
 
     @Override
-    public List<CardDTO> getCardsByPreccense(Long preccenseID) {
+    public List<Card> getCardsByPreccense(Long preccenseID) {
 
-        //is similar, but preccense is found by id sent by client
-        List<CardDTO> cardsDTO = new ArrayList<>();
         Preccense preccense = preccenseRepository.getPreccenseById(preccenseID);//obtain the preccense
+        if(preccense == null) return null;
 
-        if (cards.isEmpty() || preccense == null){return cardsDTO;}
+        List<EntityCard> entityCardList = this.database.find(EntityCard.class)
+                .where().eq("preccenseID", preccenseID).findList();// Supongamos que tienes una lista de EntityCard
+        List<SkillCard> skillCardList = this.database.find(SkillCard.class)
+                .where().eq("preccenseID", preccenseID).findList();
+        //is similar, but preccense is found by id sent by client
+        List<Card> cardList = new ArrayList<>();
+        List<Card> cardList2 = new ArrayList<>();
+        cardList.addAll(entityCardList);
+        cardList.addAll(skillCardList);
 
-        for (Card card : cards){
-            if (!card.isDeleted()){
-                AssignCardTypeGeneral(cardsDTO, preccense, card);
+
+        if (cards.isEmpty()){return cardList;}
+
+        for (Card card : cardList) {
+            if (!card.isDeleted() && card.getPreccenseID() == preccenseID) {
+                card.setPreccense(preccense);
+
+                if(card instanceof SkillCard) {
+
+                    ((SkillCard) card).setCardType(this.typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID()));
+
+                }
+
+                cardList2.add(card);
             }
         }
 
-        return cardsDTO;
+        return cardList2;
     }
 
     @Override

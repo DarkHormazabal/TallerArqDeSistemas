@@ -57,7 +57,7 @@ public interface ICardRepository {
      * @param preccenseID to view
      * show cards by preccenseID
      */
-    public List<CardDTO> getCardsByPreccense(Long preccenseID);
+    public List<Card> getCardsByPreccense(Long preccenseID);
 
     /**
      * @return
