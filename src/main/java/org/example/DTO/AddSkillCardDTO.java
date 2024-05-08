@@ -17,37 +17,37 @@ public class AddSkillCardDTO {
     /**
      * The Name.
      */
-    @NotNull
+
     private String name;
 
     /**
      * The level.
      */
-    @NotNull
+
     private int level;
 
     /**
      * The description.
      */
-    @NotNull
+
     private String description;
 
 
     /**
      * The preccenseID.
      */
-    @NotNull
+
     private Long preccenseID;
 
     /**
      * The power.
      */
-    @NotNull
+
     private int power;
 
     /**
      * The typeID.
      */
-    @NotNull
+
     private Long typeID;
 }

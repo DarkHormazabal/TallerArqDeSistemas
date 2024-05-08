@@ -3,10 +3,7 @@ package org.example.Models;
 import io.ebean.annotation.NotNull;
 import io.ebean.annotation.WhenCreated;
 import io.ebean.annotation.WhenModified;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -21,6 +18,7 @@ import java.time.Instant;
 @MappedSuperclass
 @Getter
 @Setter
+@NoArgsConstructor
 public abstract class BaseModel {
 
     /**
@@ -36,23 +34,5 @@ public abstract class BaseModel {
      */
     @NotNull
     private String name;
-
-    /**
-     * The Version.
-     */
-    @Version
-    private Long version;
-
-    /**
-     * Creation date.
-     */
-    @WhenCreated
-    private Instant created;
-
-    /**
-     * Modified date.
-     */
-    @WhenModified
-    private Instant modified;
 
 }

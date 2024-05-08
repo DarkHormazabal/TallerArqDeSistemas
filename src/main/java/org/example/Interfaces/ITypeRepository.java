@@ -14,5 +14,5 @@ public interface ITypeRepository {
      */
     public CardType getTypeSkillCardById(Long id);
 
-    public void addTypeSkillCard(List<CardType> cardTypeList);
+    public void addTypeSkillCard(CardType cardType);
 }

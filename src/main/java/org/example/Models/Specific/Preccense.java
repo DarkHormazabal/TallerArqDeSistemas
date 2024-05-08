@@ -13,7 +13,6 @@ import javax.persistence.MappedSuperclass;
  * @author Matias Orellana Hormazábal.
  */
 @ToString(callSuper = true)
-@MappedSuperclass
 @Getter
 @Setter
 @AllArgsConstructor

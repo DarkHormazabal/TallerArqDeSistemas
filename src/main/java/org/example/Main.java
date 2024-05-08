@@ -3,9 +3,6 @@ package org.example;
 import io.javalin.Javalin;
 import lombok.extern.slf4j.Slf4j;
 import org.example.Controllers.CardController;
-import org.example.Seeders.Seed;
-import org.example.Services.CardRepository;
-import org.example.Services.PreccenseRepository;
 import io.ebean.DB;
 import io.ebean.Database;
 
@@ -23,7 +20,7 @@ import java.io.IOException;
 //la hora, todo
 public class Main {
 
-    public static Javalin createAndConfigureJavalin(CardController cardController) {
+    public static Javalin createAndConfigureJavalin() {
         Javalin app = Javalin.create();
 
         // Configuraciones adicionales después de la creación de la instancia
@@ -49,7 +46,7 @@ public class Main {
         return app;
     }
 
-    public static Javalin start(final int port, CardController cardController){
+    public static Javalin start(final int port){
 
         if (port < 1024 || port > 65535){
 
@@ -60,7 +57,7 @@ public class Main {
         log.debug("Starting api rest server in port {} ..", port);
 
         //the server
-        Javalin app = createAndConfigureJavalin(cardController);
+        Javalin app = createAndConfigureJavalin();
 
 
         //the hookup thread
@@ -96,22 +93,26 @@ public class Main {
         Database db = DB.getDefault();//crea la base de datos
 
         CardController cardController = new CardController(db);
+
         try {
+
             cardController.LoadSeeders();
+            log.debug("Beginning app...");
+
+
+            /**are as controllers*/
+            Javalin app = start(2026);
 
         } catch (IOException e){
             log.error("Error loading seeders.");
+
         }
 
 
         /**Esto apunta al puerto, es similar a los controladores de software donde utiliza un http y con esa
          * peticion obtiene el resultado*/
 
-        log.debug("Beginning app...");
 
-
-        /**are as controllers*/
-        Javalin app = start(2026, cardController);
 
         /**
          log.debug("Stopping...");

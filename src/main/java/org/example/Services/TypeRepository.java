@@ -28,8 +28,8 @@ public class TypeRepository implements ITypeRepository {
     }
 
     @Override
-    public void addTypeSkillCard(List<CardType> cardTypeList) {
-        this.database.insertAll(cardTypeList);
+    public void addTypeSkillCard(CardType cardType) {
+        this.database.insert(cardType);
     }
 
 }

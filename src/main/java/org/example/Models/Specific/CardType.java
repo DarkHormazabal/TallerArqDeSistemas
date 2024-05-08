@@ -1,5 +1,6 @@
 package org.example.Models.Specific;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.ebean.annotation.NotNull;
 import lombok.*;
 import org.example.Models.BaseModel;
@@ -13,11 +14,11 @@ import javax.persistence.MappedSuperclass;
  * @author Matias Orellana Hormazábal.
  */
 @ToString(callSuper = true)
-@MappedSuperclass
+@Entity
 @Getter
 @Setter
-@Entity
 @AllArgsConstructor
+@Builder
 public class CardType extends BaseModel {
 
     /**

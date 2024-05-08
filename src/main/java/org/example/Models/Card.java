@@ -18,8 +18,8 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @AllArgsConstructor
-@Entity
-public abstract class Card extends BaseModel{
+@Builder
+public class Card extends BaseModel{
 
 
     /**
@@ -47,9 +47,5 @@ public abstract class Card extends BaseModel{
     private Long preccenseID;
 
     private Preccense preccense;
-
-    public Card() {
-        this.deleted = false;
-    }
 
 }

@@ -16,6 +16,6 @@ public interface IPreccenseRepository {
      */
     public Preccense getPreccenseById(Long id);
 
-    public void addPreccenseCard(List<Preccense> preccenses);
+    public void addPreccenseCard(Preccense preccense);
 
 }

@@ -13,11 +13,9 @@ import javax.persistence.MappedSuperclass;
  * @author Matias Orellana Hormazábal.
  */
 @ToString
-@MappedSuperclass
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
 public class SkillCard extends Card {
 
     /**
@@ -34,4 +32,11 @@ public class SkillCard extends Card {
 
     private CardType cardType;
 
+    public SkillCard(String name, int level, String description, boolean deleted, Long preccenseID, Preccense preccense, int power, long typeID, CardType cardType) {
+        super(level, description, deleted, preccenseID, preccense);
+        this.power = power;
+        this.typeID = typeID;
+        this.cardType = cardType;
+        this.setName(name);
+    }
 }

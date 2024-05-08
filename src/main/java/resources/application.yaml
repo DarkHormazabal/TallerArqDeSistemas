@@ -7,15 +7,16 @@ ebean:
     run: true
   debug:
     sql: true
-    lazyload: true
+    lazy load: true
   logging: all
+  transient-init-error: false
 
 # database configuration
 datasource:
   db:
-    username: TallerDeArqDeSistemas
-    password: 79z#5RX&qq5z
+    username: ""
+    password: ""
     platform: sqlite # h2, postgres, mysql, oracle, sqlserver
-    ddlMode: dropCreate # none | dropCreate | migrations
+    ddlMode: update # none | dropCreate | migrations
     dbName: Cards
     url: jdbc:sqlite:Cards.db
