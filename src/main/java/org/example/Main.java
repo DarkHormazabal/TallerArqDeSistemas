@@ -68,6 +68,13 @@ public class Main {
             ctx.json(cardRepository.getCardById(Long.parseLong(ctx.pathParam("id"))));
         });
 
+        app.get("/Cards/{name}", ctx -> {
+
+            String cardName = ctx.pathParam("name");
+            // Llamar a cardRepository.getCardsByPreccense con el preccenseID
+            ctx.json(cardRepository.Find(cardName));
+        });
+
         app.post("/Cards/entity", ctx -> {
             // Parsear el cuerpo de la solicitud a un objeto AddEntityCardDTO
             AddEntityCardDTO dto = ctx.bodyAsClass(AddEntityCardDTO.class);
@@ -90,12 +97,26 @@ public class Main {
             ctx.status(201);
         });
 
-        app.put("/Cards/id", ctx -> {
 
-        });
+        app.delete("/Cards/{id}", ctx -> {
+            // Obtener el ID de la tarjeta de la URL y convertirlo a tipo Long
+            Long cardId = Long.parseLong(ctx.pathParam("id"));
 
-        app.delete("/Cards/id", ctx -> {
+            // Intentar eliminar la tarjeta y obtener el resultado
+            boolean isDeleted = cardRepository.deleteCard(cardId);
 
+            // Verificar si la tarjeta se eliminó correctamente
+            if (isDeleted) {
+                // Responder con un mensaje indicando que la tarjeta se eliminó
+                ctx.result("Tarjeta eliminada correctamente");
+                // Opcionalmente, puedes responder con un código de estado 204 (No Content)
+                ctx.status(204);
+            } else {
+                // Si la tarjeta no se pudo eliminar, responder con un mensaje de error
+                ctx.result("No se pudo eliminar la tarjeta");
+                // Opcionalmente, puedes responder con un código de estado 404 (Not Found)
+                ctx.status(404);
+            }
         });
 
         // Define tus rutas y manejadores aquí utilizando app.get(), app.post(), etc.

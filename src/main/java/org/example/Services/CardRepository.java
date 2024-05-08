@@ -99,8 +99,19 @@ public class CardRepository implements ICardRepository {
 
     @Override
     public Card Find(String name) {
-        Card findCard = database.find(Card.class, name);
-        return findCard;
+        Card card = database.find(SkillCard.class, name);//find tha card
+        if(card == null){
+            card = database.find(EntityCard.class, name);
+        }
+        if(card.isDeleted()) return null;
+        Preccense preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
+        card.setPreccense(preccense);
+        if(card instanceof SkillCard) {
+            CardType type = typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID());
+            ((SkillCard) card).setCardType(type);
+        }
+
+        return card;
     }
 
     @Override
@@ -191,21 +202,25 @@ public class CardRepository implements ICardRepository {
         if(card == null){
             card = database.find(EntityCard.class, id);
         }
+        if(card.isDeleted()) return null;
         Preccense preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
         card.setPreccense(preccense);
         if(card instanceof SkillCard) {
             CardType type = typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID());
             ((SkillCard) card).setCardType(type);
         }
+
         return card;
     }
 
     @Override
     public boolean deleteCard(Long id) {
-        Card card = database.find(Card.class, id);//find the card
-        if (card == null || card.isDeleted()){ return false; }
-        card.setDeleted(true);
-        this.database.save(card);
+        Card card = database.find(SkillCard.class, id);//find tha card
+        if(card == null){
+            card = database.find(EntityCard.class, id);
+        }
+        if (card == null){ return false; }
+        this.database.delete(card);
         return true;
     }
 
