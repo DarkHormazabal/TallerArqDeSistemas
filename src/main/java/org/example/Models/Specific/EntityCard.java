@@ -1,10 +1,7 @@
 package org.example.Models.Specific;
 
 import io.ebean.annotation.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.example.Models.Card;
 
 import javax.persistence.Entity;
@@ -19,8 +16,8 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @Setter
-@Builder
 @Entity
+@AllArgsConstructor
 public class EntityCard extends Card {
 
     /**
@@ -47,11 +44,5 @@ public class EntityCard extends Card {
     @NotNull
     private int magicalProtection;
 
-    public EntityCard() {
-        super();
-    }
 
-    public static EntityCardBuilder entityCardBuilder() {
-        return new EntityCardBuilder();
-    }
 }

@@ -16,20 +16,13 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @Setter
-@Builder
 @Entity
+@AllArgsConstructor
 public class CardType extends BaseModel {
 
     /**
      * Card Type haven't atributtes in specific, ID and name have the BaseModel
      */
-    public CardType() {
-        super();
-    }
 
-    // Método estático para obtener una instancia del Builder
-    public static CardTypeBuilder builder() {
-        return new CardTypeBuilder();
-    }
 
 }

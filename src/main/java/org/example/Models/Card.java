@@ -2,6 +2,7 @@ package org.example.Models;
 
 import io.ebean.annotation.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.example.Models.Specific.Preccense;
 
 import javax.persistence.Entity;
@@ -17,7 +18,6 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 @Entity
 public abstract class Card extends BaseModel{
 
@@ -52,8 +52,4 @@ public abstract class Card extends BaseModel{
         this.deleted = false;
     }
 
-    // Método estático para obtener una instancia del Builder
-    public static CardBuilder builder() {
-        return new CardBuilder();
-    }
 }

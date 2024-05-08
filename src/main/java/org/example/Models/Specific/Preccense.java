@@ -27,14 +27,6 @@ public class Preccense extends BaseModel {
     @NotNull
     private String color;
 
-    // Constructor protegido para que no pueda ser instanciado directamente
-    public Preccense() {
-        super();
-    }
 
-    // Método estático para obtener una instancia del Builder
-    public static PreccenseBuilder builder() {
-        return new PreccenseBuilder();
-    }
 
 }

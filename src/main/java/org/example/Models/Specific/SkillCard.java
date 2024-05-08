@@ -16,8 +16,8 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @Setter
-@Builder
 @Entity
+@AllArgsConstructor
 public class SkillCard extends Card {
 
     /**
@@ -34,12 +34,4 @@ public class SkillCard extends Card {
 
     private CardType cardType;
 
-    public SkillCard() {
-        super();
-
-    }
-
-    public static SkillCardBuilder skillCardBuilder() {
-        return new SkillCardBuilder();
-    }
 }
