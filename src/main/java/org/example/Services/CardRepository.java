@@ -162,8 +162,6 @@ public class CardRepository implements ICardRepository {
     @Override
     public List<Card> getCardsByPreccense(Long preccenseID) {
 
-        Preccense preccense = preccenseRepository.getPreccenseById(preccenseID);//obtain the preccense
-        if(preccense == null) return null;
 
         List<EntityCard> entityCardList = this.database.find(EntityCard.class)
                 .where().eq("preccenseID", preccenseID).findList();// Supongamos que tienes una lista de EntityCard
@@ -179,8 +177,8 @@ public class CardRepository implements ICardRepository {
         if (cards.isEmpty()){return cardList;}
 
         for (Card card : cardList) {
-            if (!card.isDeleted() && card.getPreccenseID() == preccenseID) {
-                card.setPreccense(preccense);
+            if (!card.isDeleted() && preccenseID.equals(card.getPreccenseID())) {
+                card.setPreccense(this.preccenseRepository.getPreccenseById(card.getPreccenseID()));
 
                 if(card instanceof SkillCard) {
 
