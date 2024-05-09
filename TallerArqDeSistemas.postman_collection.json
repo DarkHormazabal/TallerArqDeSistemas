@@ -56,13 +56,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/Cards/preccense/3",
+							"raw": "{{api}}/Cards/presence/3",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"Cards",
-								"preccense",
+								"presence",
 								"3"
 							]
 						}

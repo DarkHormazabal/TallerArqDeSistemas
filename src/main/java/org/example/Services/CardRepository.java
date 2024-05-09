@@ -99,9 +99,10 @@ public class CardRepository implements ICardRepository {
 
     @Override
     public Card Find(String name) {
-        Card card = database.find(SkillCard.class, name);//find tha card
+        Card card = database.find(EntityCard.class, name);//find tha card
+        log.debug(card.getName());
         if(card == null){
-            card = database.find(EntityCard.class, name);
+            card = database.find(SkillCard.class, name);
         }
         if(card.isDeleted()) return null;
         Preccense preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
@@ -164,20 +165,25 @@ public class CardRepository implements ICardRepository {
 
 
         List<EntityCard> entityCardList = this.database.find(EntityCard.class)
+                .fetch("preccense")
                 .where().eq("preccenseID", preccenseID).findList();// Supongamos que tienes una lista de EntityCard
         List<SkillCard> skillCardList = this.database.find(SkillCard.class)
+                .fetch("preccense")
+                .fetch("cardType")
                 .where().eq("preccenseID", preccenseID).findList();
+
         //is similar, but preccense is found by id sent by client
         List<Card> cardList = new ArrayList<>();
-        List<Card> cardList2 = new ArrayList<>();
         cardList.addAll(entityCardList);
         cardList.addAll(skillCardList);
 
 
-        if (cards.isEmpty()){return cardList;}
+        if (cardList.isEmpty()){return cardList;}
 
         for (Card card : cardList) {
-            if (!card.isDeleted() && preccenseID.equals(card.getPreccenseID())) {
+
+            if (!card.isDeleted()) {
+
                 card.setPreccense(this.preccenseRepository.getPreccenseById(card.getPreccenseID()));
 
                 if(card instanceof SkillCard) {
@@ -185,12 +191,10 @@ public class CardRepository implements ICardRepository {
                     ((SkillCard) card).setCardType(this.typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID()));
 
                 }
-
-                cardList2.add(card);
             }
         }
 
-        return cardList2;
+        return cardList;
     }
 
     @Override

@@ -54,7 +54,7 @@ public class Main {
 
         });
 
-        app.get("/Cards/preccense/{preccenseID}", ctx -> {
+        app.get("/Cards/presence/{preccenseID}", ctx -> {
             // Obtener el valor del parámetro "preccenseID" de la URL
             Long preccenseID = Long.parseLong(ctx.pathParam("preccenseID"));
 
@@ -70,9 +70,10 @@ public class Main {
 
         app.get("/Cards/{name}", ctx -> {
 
-            String cardName = ctx.pathParam("name");
+            String name = ctx.pathParam("name");
+            log.debug("Card name: {}", name);
             // Llamar a cardRepository.getCardsByPreccense con el preccenseID
-            ctx.json(cardRepository.Find(cardName));
+            ctx.json(cardRepository.Find(name));
         });
 
         app.post("/Cards/entity", ctx -> {
