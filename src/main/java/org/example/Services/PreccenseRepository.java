@@ -37,6 +37,7 @@ public class PreccenseRepository implements IPreccenseRepository {
 
     @Override
     public List<Preccense> getPreccenses() {
+        this.preccenses = database.find(Preccense.class).findList();
         return preccenses;
     }
 }

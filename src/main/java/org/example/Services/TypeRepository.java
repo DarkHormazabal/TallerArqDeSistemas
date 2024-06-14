@@ -40,6 +40,7 @@ public class TypeRepository implements ITypeRepository {
 
     @Override
     public List<CardType> getCardTypes() {
-        return cardTypes;
+        this.cardTypes = database.find(CardType.class).findList();
+        return this.cardTypes;
     }
 }

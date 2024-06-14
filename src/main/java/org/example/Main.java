@@ -171,9 +171,9 @@ public class Main {
 
         Database db = DB.getDefault();//crea la base de datos
 
-        PreccenseRepository preccenseRepository = new PreccenseRepository(db);
+        PreccenseRepository preccenseRepository = new PreccenseRepository(db, new LinkedList<>());
 
-        TypeRepository typeRepository = new TypeRepository(db);
+        TypeRepository typeRepository = new TypeRepository(db, new LinkedList<>());
 
         CardRepository cardRepository = new CardRepository(new LinkedList<>(), db, preccenseRepository, typeRepository);
 

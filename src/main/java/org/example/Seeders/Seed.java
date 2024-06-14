@@ -88,7 +88,10 @@ public class Seed {
             List<CardType> cardTypes = this.typeRepository.getCardTypes();
             List<Preccense> preccenses = this.preccenseRepository.getPreccenses();
 
+
             GenerateCards(20,cardTypes, preccenses);
+
+
 
     }
 
@@ -97,7 +100,7 @@ public class Seed {
      * @param min , min limit
      * @param max , max limit
      */
-    public int RandomNumbers(int min, int max) {
+    public int RandomNumbers(int min, int max){
             if (min > max) {
                     throw new IllegalArgumentException("El valor mínimo no puede ser mayor que el valor máximo.");
             }
@@ -119,7 +122,7 @@ public class Seed {
             for (int i = 0; i < length; i++) {
                     // Approximately 1/3 probability to add a space, but don't to start
                     // and neither can have 2 spaces
-                    if (random.nextInt(3) == 0 && i > 0 && name.length() > 2) {
+                    if (random.nextInt(0,3) == 0 && i > 0 && name.length() > 2) {
                             name.append(' ');
 
                     //fisrt letter
@@ -140,23 +143,31 @@ public class Seed {
      */
     public void GenerateCards(int quantity, List<CardType> typeList, List<Preccense> preccenseList){
 
+            String name;
+            int level;
+            String description;
+            int indexPreccense;
+            long indexPreccenseID;
+            Preccense preccense;
+            Card cardGenerated;
+            int EntityOrSkill;
             for (int i = 0; i < quantity; i++) {
                     //the name generated
-                    String name = RandomName(RandomNumbers(2, 20));
+                    name = RandomName(RandomNumbers(2, 20));
                     //the level generated
-                    int level = RandomNumbers(1, 5);
+                    level = RandomNumbers(1, 5);
                     //the description generated
-                    String description = RandomName(RandomNumbers(10, 40)) + ".";
+                    description = RandomName(RandomNumbers(10, 40)) + ".";
                     //the preccenseList's quantity
-                    int indexPreccense = RandomNumbers(1, preccenseList.size());
-                    long indexPreccenseID = indexPreccense;
-                    Preccense preccense = preccenseList.get(indexPreccense);
+                    indexPreccense = RandomNumbers(0, preccenseList.size() - 1);
+                    indexPreccenseID = indexPreccense + 1;
+                    preccense = preccenseList.get(indexPreccense);
 
                     //generate Card
-                    Card cardGenerated = CardBuilder.build(name, level, description, false, indexPreccenseID, preccense);
+                    cardGenerated = CardBuilder.build(name, level, description, false, indexPreccenseID, preccense);
 
                     //cardtypeRandom
-                    int EntityOrSkill = RandomNumbers(1,2);
+                    EntityOrSkill = RandomNumbers(1,2);
 
                     switch (EntityOrSkill) {
                             case 1:
@@ -196,8 +207,8 @@ public class Seed {
             //skillCards atributtes
             int power = RandomNumbers(0, 30);
             //the typeList's quantity
-            int indexType = RandomNumbers(1, typeList.size());
-            long indexTypeID = indexType;
+            int indexType = RandomNumbers(0, typeList.size() - 1);
+            long indexTypeID = indexType + 1;
             CardType cardType = typeList.get(indexType);
             SkillCard skillCard = SkillCardBuilder.build(card, power, indexTypeID, cardType);
             this.cardRepository.addSkillCardSeeder(skillCard);
