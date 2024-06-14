@@ -16,8 +16,16 @@ public interface IPreccenseRepository {
      */
     public Preccense getPreccenseById(Long id);
 
+    /**
+     * Method to addTypePreccenseCard with
+     * @param preccense
+     */
     public void addPreccenseCard(Preccense preccense);
 
+    /**
+     * Method to addTypeSkillCard with
+     * @return a List<Preccense>
+     */
     public List<Preccense> getPreccenses();
 
 }
