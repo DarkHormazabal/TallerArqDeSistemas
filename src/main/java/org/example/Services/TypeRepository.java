@@ -18,8 +18,14 @@ import java.util.List;
 @AllArgsConstructor
 public class TypeRepository implements ITypeRepository {
 
+    /**
+     * The database
+     */
     private final Database database;
 
+    /**
+     * The types list
+     */
     private List<CardType> cardTypes;
 
     @Override

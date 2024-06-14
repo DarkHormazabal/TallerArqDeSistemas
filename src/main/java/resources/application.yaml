@@ -17,6 +17,6 @@ datasource:
     username: ""
     password: ""
     platform: sqlite # h2, postgres, mysql, oracle, sqlserver
-    ddlMode: update # none | dropCreate | migrations
+    ddlMode: dropCreate # none | dropCreate | migrations
     dbName: Cards
     url: jdbc:sqlite:Cards.db

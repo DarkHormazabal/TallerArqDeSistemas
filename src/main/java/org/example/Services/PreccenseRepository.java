@@ -19,6 +19,9 @@ public class PreccenseRepository implements IPreccenseRepository {
      */
     private final Database database;
 
+    /**
+     * The preccenses list
+     */
     private List<Preccense> preccenses;
 
     @Override
