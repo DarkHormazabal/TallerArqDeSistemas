@@ -5,7 +5,9 @@ import lombok.*;
 import org.example.Models.Card;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 
 /**
  * SkillCard Class.
@@ -31,6 +33,7 @@ public class SkillCard extends Card {
     @NotNull
     private Long typeID;
 
+    @ManyToOne
     private CardType cardType;
 
     public SkillCard(String name, int level, String description, boolean deleted, Long preccenseID, Preccense preccense, int power, Long typeID, CardType cardType) {

@@ -47,13 +47,13 @@ public interface ICardRepository {
      */
     public Card addSkillCardSeeder(Card card);
     /**
-     * @return
+     * @return cardList
      * show cards in general
      */
     public List<Card> getCards();
 
     /**
-     * @return
+     * @return cardList
      * @param preccenseID to view
      * show cards by preccenseID
      */
