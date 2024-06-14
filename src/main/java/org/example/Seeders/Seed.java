@@ -29,16 +29,31 @@ import java.util.Random;
 @AllArgsConstructor
 public class Seed {
 
+    /**
+     * The Repositories
+     */
     private ICardRepository cardRepository;
 
     private IPreccenseRepository preccenseRepository;
 
     private ITypeRepository typeRepository;
 
+    /**
+     * The Alphabet available
+     */
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz ";
+    /**
+     * The MayusAlphabet available
+     */
     private static final String MayusALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    /**
+     * The Random
+     */
     private static final Random random = new Random();
 
+    /**
+     * The Seeders
+     */
     public void Seeders() {
 
             /*
