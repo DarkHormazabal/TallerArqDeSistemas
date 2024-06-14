@@ -67,9 +67,13 @@ public class Seed {
             this.preccenseRepository.addPreccenseCard(preccense6);
             this.preccenseRepository.addPreccenseCard(preccense7);
 
-            List<CardType> cardTypes = typeRepository
+            /*
+             * cards seeder
+             */
+            List<CardType> cardTypes = this.typeRepository.getCardTypes();
+            List<Preccense> preccenses = this.preccenseRepository.getPreccenses();
 
-            GenerateCards(20, );
+            GenerateCards(20,cardTypes, preccenses);
 
     }
 
@@ -121,36 +125,37 @@ public class Seed {
      */
     public void GenerateCards(int quantity, List<CardType> typeList, List<Preccense> preccenseList){
 
-            //the name generated
-            String name = RandomName(RandomNumbers(2, 20));
-            //the level generated
-            int level = RandomNumbers(1, 5);
-            //the description generated
-            String description = RandomName(RandomNumbers(10, 40)) + ".";
-            //the preccenseList's quantity
-            int indexPreccense = RandomNumbers(1, preccenseList.size());
-            long indexPreccenseID = indexPreccense;
-            Preccense preccense = preccenseList.get(indexPreccense);
+            for (int i = 0; i < quantity; i++) {
+                    //the name generated
+                    String name = RandomName(RandomNumbers(2, 20));
+                    //the level generated
+                    int level = RandomNumbers(1, 5);
+                    //the description generated
+                    String description = RandomName(RandomNumbers(10, 40)) + ".";
+                    //the preccenseList's quantity
+                    int indexPreccense = RandomNumbers(1, preccenseList.size());
+                    long indexPreccenseID = indexPreccense;
+                    Preccense preccense = preccenseList.get(indexPreccense);
 
-            //generate Card
-            Card cardGenerated = CardBuilder.build(name, level, description, false, indexPreccenseID, preccense);
+                    //generate Card
+                    Card cardGenerated = CardBuilder.build(name, level, description, false, indexPreccenseID, preccense);
 
-            //cardtypeRandom
-            int EntityOrSkill = RandomNumbers(1,2);
+                    //cardtypeRandom
+                    int EntityOrSkill = RandomNumbers(1,2);
 
-            switch (EntityOrSkill) {
-                    case 1:
-                        GenerateEntityCards(cardGenerated);
-                        break;
-                    case 2:
-                        GenerateSkillCards(cardGenerated, typeList);
-                        break;
-                    default:
-                        System.out.println("no hay otro tipo de carta");
-                        break;
+                    switch (EntityOrSkill) {
+                            case 1:
+                                    GenerateEntityCards(cardGenerated);
+                                    break;
+                            case 2:
+                                    GenerateSkillCards(cardGenerated, typeList);
+                                    break;
+                            default:
+                                    System.out.println("no hay otro tipo de carta");
+                                    break;
 
+                    }
             }
-
     }
 
     /**
@@ -182,6 +187,4 @@ public class Seed {
             SkillCard skillCard = SkillCardBuilder.build(card, power, indexTypeID, cardType);
             this.cardRepository.addSkillCardSeeder(skillCard);
     }
-
-
 }

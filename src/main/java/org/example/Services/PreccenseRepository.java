@@ -11,8 +11,6 @@ import org.example.Models.Specific.Preccense;
 import java.util.List;
 
 @Slf4j
-@Getter
-@Setter
 @AllArgsConstructor
 public class PreccenseRepository implements IPreccenseRepository {
 
@@ -32,5 +30,10 @@ public class PreccenseRepository implements IPreccenseRepository {
     @Override
     public void addPreccenseCard(Preccense preccense) {
         this.database.insert(preccense);
+    }
+
+    @Override
+    public List<Preccense> getPreccenses() {
+        return preccenses;
     }
 }

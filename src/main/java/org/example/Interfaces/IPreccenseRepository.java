@@ -18,4 +18,6 @@ public interface IPreccenseRepository {
 
     public void addPreccenseCard(Preccense preccense);
 
+    public List<Preccense> getPreccenses();
+
 }

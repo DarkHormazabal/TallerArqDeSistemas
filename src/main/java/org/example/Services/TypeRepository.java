@@ -15,8 +15,6 @@ import java.util.List;
  * Similar to Preccense, but only applied to SkillCard
  */
 @Slf4j
-@Getter
-@Setter
 @AllArgsConstructor
 public class TypeRepository implements ITypeRepository {
 
@@ -34,4 +32,8 @@ public class TypeRepository implements ITypeRepository {
         this.database.insert(cardType);
     }
 
+    @Override
+    public List<CardType> getCardTypes() {
+        return cardTypes;
+    }
 }
