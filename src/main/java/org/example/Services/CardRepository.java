@@ -52,7 +52,7 @@ public class CardRepository implements ICardRepository {
     public Card addEntityCard(AddEntityCardDTO addEntityCardDTO) {
         Preccense FoundPreccense = preccenseRepository.getPreccenseById(addEntityCardDTO.getPreccenseID());
         //automapping
-        Card card = CardBuilder.build(
+        Card card = CardBuilder.build((long) this.cards.size(),
                 addEntityCardDTO.getName(),
                 addEntityCardDTO.getLevel(),
                 addEntityCardDTO.getDescription(),
@@ -74,7 +74,7 @@ public class CardRepository implements ICardRepository {
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO) {
         Preccense FoundPreccense = preccenseRepository.getPreccenseById(addSkillCardDTO.getPreccenseID());
         //automapping
-        Card card = CardBuilder.build(
+        Card card = CardBuilder.build((long) this.cards.size(),
                 addSkillCardDTO.getName(),
                 addSkillCardDTO.getLevel(),
                 addSkillCardDTO.getDescription(),
@@ -101,38 +101,40 @@ public class CardRepository implements ICardRepository {
     @Override
     public Card Find(String name) {
 
-        //find the skillCard
-        Card card = this.database.find(SkillCard.class)
-                .fetch("preccense")
-                .fetch("cardType")
-                .where().eq("name", name)
-                .findOne();
-        //find the Entitycard
-        if(card == null){
-            card = this.database.find(EntityCard.class)
+        try {
+            //find the skillCard
+            Card card = this.database.find(SkillCard.class)
                     .fetch("preccense")
+                    .fetch("cardType")
                     .where().eq("name", name)
                     .findOne();
+
+            //find the Entitycard
+            if(card == null){
+                card = this.database.find(EntityCard.class)
+                        .fetch("preccense")
+                        .where().eq("name", name)
+                        .findOne();
+            }
+            //notfound
+            if(card == null || card.isDeleted()) return null;
+            return card;
+
+        } catch (Exception e) {
+            // Manejar la excepción aquí, por ejemplo, imprimir el mensaje de error
+            e.printStackTrace();
+            return null;
         }
-
-        //notfound
-        if(card == null || card.isDeleted()) return null;
-        return card;
     }
 
     //documented in interface
     @Override
-    public Card addEntityCardSeeder(Card card) {
+    public Card addCardSeeder(Card card) {
+
         this.database.save(card);
         return card;
     }
 
-    //documented in interface
-    @Override
-    public Card addSkillCardSeeder(Card card) {
-        this.database.save(card);
-        return card;
-    }
 
     //documented in interface
     @Override

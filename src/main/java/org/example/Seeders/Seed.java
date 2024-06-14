@@ -29,6 +29,7 @@ import java.util.Random;
 @AllArgsConstructor
 public class Seed {
 
+    private static final Logger log = LoggerFactory.getLogger(Seed.class);
     /**
      * The Repositories
      */
@@ -164,7 +165,8 @@ public class Seed {
                     preccense = preccenseList.get(indexPreccense);
 
                     //generate Card
-                    cardGenerated = CardBuilder.build(name, level, description, false, indexPreccenseID, preccense);
+                    cardGenerated = CardBuilder.build((long) i+1, name, level, description, false, indexPreccenseID, preccense);
+                    log.debug(cardGenerated.getId().toString());
 
                     //cardtypeRandom
                     EntityOrSkill = RandomNumbers(1,2);
@@ -195,7 +197,7 @@ public class Seed {
             int physicalProtection = RandomNumbers(0, 40);
             int magicalProtection = RandomNumbers(0, 40);
             EntityCard entityCard = EntityCardBuilder.build(card, physicalPower, magicalPower, physicalProtection, magicalProtection);
-            this.cardRepository.addEntityCardSeeder(entityCard);
+            this.cardRepository.addCardSeeder(entityCard);
     }
 
     /**
@@ -211,6 +213,6 @@ public class Seed {
             long indexTypeID = indexType + 1;
             CardType cardType = typeList.get(indexType);
             SkillCard skillCard = SkillCardBuilder.build(card, power, indexTypeID, cardType);
-            this.cardRepository.addSkillCardSeeder(skillCard);
+            this.cardRepository.addCardSeeder(skillCard);
     }
 }

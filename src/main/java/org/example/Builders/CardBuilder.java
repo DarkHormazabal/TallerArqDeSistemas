@@ -9,7 +9,7 @@ import org.example.Models.Specific.Preccense;
 @Builder
 public class CardBuilder extends BaseModel {
 
-    public static Card build(String name,int level, String description,boolean deleted, Long preccenseID, Preccense
+    public static Card build(Long id,String name,int level, String description,boolean deleted, Long preccenseID, Preccense
     preccense){
         Card cardBuilt = Card.builder()
                 .level(level)
@@ -18,6 +18,7 @@ public class CardBuilder extends BaseModel {
                 .preccenseID(preccenseID)
                 .preccense(preccense)
                 .build();
+        cardBuilt.setId(id);
         cardBuilt.setName(name);
         return cardBuilt;
     }

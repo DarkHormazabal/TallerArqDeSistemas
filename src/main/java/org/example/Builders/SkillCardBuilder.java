@@ -13,6 +13,7 @@ public class SkillCardBuilder {
                 card.getDescription(), card.isDeleted(),
                 card.getPreccenseID(), card.getPreccense()
                 , power, typeID, cardType);
+        skillCard.setId(card.getId());
         return skillCard;
 
     }

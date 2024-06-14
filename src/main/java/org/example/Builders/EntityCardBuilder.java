@@ -14,6 +14,7 @@ public class EntityCardBuilder {
                 physicalPower, magicalPower,
                 physicalProtection, magicalProtection);
 
+        entityCard.setId(card.getId());
         return entityCard;
 
     }

@@ -39,13 +39,8 @@ public interface ICardRepository {
      * @param card add by seeder
      * @return
      */
-    public Card addEntityCardSeeder(Card card);
+    public Card addCardSeeder(Card card);
 
-    /**
-     * @param card add by seeder
-     * @return
-     */
-    public Card addSkillCardSeeder(Card card);
     /**
      * @return cardList
      * show cards in general

@@ -7,6 +7,7 @@ import io.ebean.Database;
 import org.example.DTO.AddEntityCardDTO;
 import org.example.DTO.AddSkillCardDTO;
 import org.example.Interfaces.ICardRepository;
+import org.example.Models.Card;
 import org.example.Seeders.Seed;
 import org.example.Services.CardRepository;
 import org.example.Services.PreccenseRepository;
@@ -68,12 +69,23 @@ public class Main {
             ctx.json(cardRepository.getCardById(Long.parseLong(ctx.pathParam("id"))));
         });
 
-        app.get("/Cards/{name}", ctx -> {
+        app.get("/Cards/nombre/{name}", ctx -> {
 
             String name = ctx.pathParam("name");
             log.debug("Card name: {}", name);
-            // Llamar a cardRepository.getCardsByPreccense con el preccenseID
-            ctx.json(cardRepository.Find(name));
+            if (name.isEmpty()) {
+                ctx.status(400); // Bad Request if the param is empty o null
+                ctx.json("El parámetro 'name' no puede estar vacío.");
+                return;
+            }
+            Card card = cardRepository.Find(name);
+
+            if (card == null) {
+                ctx.status(404); // Not Found si no se encuentra ninguna carta con ese nombre
+                ctx.json("No se encontró ninguna carta con el nombre: " + name);
+            } else {
+                ctx.json(card); // Devolver la carta encontrada como JSON
+            }
         });
 
         app.post("/Cards/entity", ctx -> {
