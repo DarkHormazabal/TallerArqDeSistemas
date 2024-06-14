@@ -226,6 +226,7 @@ public class CardRepository implements ICardRepository {
         return true;
     }
 
+    //this code don't serve
     private void AssignCardTypeGeneral(List<CardDTO> cardsDTO, Preccense preccense, Card card) {
 
 
@@ -270,5 +271,7 @@ public class CardRepository implements ICardRepository {
         return skillCardDTO;
 
     }
+
+
 
 }

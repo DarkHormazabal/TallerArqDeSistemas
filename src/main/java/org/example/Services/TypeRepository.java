@@ -22,6 +22,8 @@ public class TypeRepository implements ITypeRepository {
 
     private final Database database;
 
+    private List<CardType> cardTypes;
+
     @Override
     public CardType getTypeSkillCardById(Long id) {
         return database.find(CardType.class, id);

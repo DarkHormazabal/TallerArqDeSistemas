@@ -21,6 +21,7 @@ public class PreccenseRepository implements IPreccenseRepository {
      */
     private final Database database;
 
+    private List<Preccense> preccenses;
 
     @Override
     public Preccense getPreccenseById(Long id) {
