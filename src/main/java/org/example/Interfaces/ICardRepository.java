@@ -24,12 +24,6 @@ public interface ICardRepository {
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO);
 
     /**
-     * @param findCard to add
-     * @return
-     */
-    public Card restoreCard(Card findCard);
-
-    /**
      * @param name add
      * @return
      */

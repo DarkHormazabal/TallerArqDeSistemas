@@ -165,7 +165,8 @@ public class Seed {
                     preccense = preccenseList.get(indexPreccense);
 
                     //generate Card
-                    cardGenerated = CardBuilder.build((long) i+1, name, level, description, false, indexPreccenseID, preccense);
+
+                    cardGenerated = CardBuilder.build((long)i+1, name, level, description, false, indexPreccenseID, preccense);
                     log.debug(cardGenerated.getId().toString());
 
                     //cardtypeRandom

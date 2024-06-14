@@ -123,10 +123,10 @@ public class Main {
                 // Responder con un mensaje indicando que la tarjeta se eliminó
                 ctx.result("Tarjeta eliminada correctamente");
                 // Opcionalmente, puedes responder con un código de estado 204 (No Content)
-                ctx.status(204);
+                ctx.status(200);
             } else {
                 // Si la tarjeta no se pudo eliminar, responder con un mensaje de error
-                ctx.result("No se pudo eliminar la tarjeta");
+                ctx.result("Ya está eliminada la tarjeta");
                 // Opcionalmente, puedes responder con un código de estado 404 (Not Found)
                 ctx.status(404);
             }

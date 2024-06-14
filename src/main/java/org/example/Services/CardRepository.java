@@ -35,6 +35,8 @@ public class CardRepository implements ICardRepository {
      */
     private List<Card> cards;
 
+    private static long idAcumuler = 0L;
+
     /**
      * The database
      */
@@ -51,8 +53,9 @@ public class CardRepository implements ICardRepository {
     @Override
     public Card addEntityCard(AddEntityCardDTO addEntityCardDTO) {
         Preccense FoundPreccense = preccenseRepository.getPreccenseById(addEntityCardDTO.getPreccenseID());
+        long total = getCards().size();
         //automapping
-        Card card = CardBuilder.build((long) this.cards.size(),
+        Card card = CardBuilder.build(idAcumuler + 1L,
                 addEntityCardDTO.getName(),
                 addEntityCardDTO.getLevel(),
                 addEntityCardDTO.getDescription(),
@@ -66,6 +69,7 @@ public class CardRepository implements ICardRepository {
                 , addEntityCardDTO.getPhysicalProtection(),
                 addEntityCardDTO.getMagicalProtection());
         //change your preccense
+        idAcumuler++;
         this.database.save(entityCard);
         return entityCard;
     }
@@ -73,8 +77,9 @@ public class CardRepository implements ICardRepository {
     @Override
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO) {
         Preccense FoundPreccense = preccenseRepository.getPreccenseById(addSkillCardDTO.getPreccenseID());
+        long total = getCards().size();
         //automapping
-        Card card = CardBuilder.build((long) this.cards.size(),
+        Card card = CardBuilder.build(idAcumuler + 1L,
                 addSkillCardDTO.getName(),
                 addSkillCardDTO.getLevel(),
                 addSkillCardDTO.getDescription(),
@@ -87,14 +92,9 @@ public class CardRepository implements ICardRepository {
                 addSkillCardDTO.getPower(),
                 addSkillCardDTO.getTypeID(),
                 foundtype);
+        idAcumuler++;
         this.database.save(skillCard);
         return skillCard;
-    }
-
-    @Override
-    public Card restoreCard(Card findCard) {
-        findCard.setDeleted(false);
-        return findCard;
     }
 
     //documented in interface
@@ -125,12 +125,18 @@ public class CardRepository implements ICardRepository {
             e.printStackTrace();
             return null;
         }
+
+
+
+
+
     }
 
     //documented in interface
     @Override
     public Card addCardSeeder(Card card) {
 
+        idAcumuler++;
         this.database.save(card);
         return card;
     }
