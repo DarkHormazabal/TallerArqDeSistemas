@@ -97,37 +97,44 @@ public class CardRepository implements ICardRepository {
         return findCard;
     }
 
+    //documented in interface
     @Override
     public Card Find(String name) {
-        Card card = database.find(EntityCard.class, name);//find tha card
-        log.debug(card.getName());
+
+        //find the skillCard
+        Card card = this.database.find(SkillCard.class)
+                .fetch("preccense")
+                .fetch("cardType")
+                .where().eq("name", name)
+                .findOne();
+        //find the Entitycard
         if(card == null){
-            card = database.find(SkillCard.class, name);
-        }
-        if(card.isDeleted()) return null;
-        Preccense preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
-        card.setPreccense(preccense);
-        if(card instanceof SkillCard) {
-            CardType type = typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID());
-            ((SkillCard) card).setCardType(type);
+            card = this.database.find(EntityCard.class)
+                    .fetch("preccense")
+                    .where().eq("name", name)
+                    .findOne();
         }
 
+        //notfound
+        if(card == null || card.isDeleted()) return null;
         return card;
     }
 
+    //documented in interface
     @Override
     public Card addEntityCardSeeder(Card card) {
         this.database.save(card);
         return card;
     }
 
+    //documented in interface
     @Override
     public Card addSkillCardSeeder(Card card) {
         this.database.save(card);
         return card;
     }
 
-
+    //documented in interface
     @Override
     public List<Card> getCards() {
 
@@ -150,6 +157,7 @@ public class CardRepository implements ICardRepository {
 
     }
 
+    //documented in interface
     @Override
     public List<Card> getCardsByPreccense(Long preccenseID) {
         //preccense's validation
@@ -175,21 +183,23 @@ public class CardRepository implements ICardRepository {
         return cardList;
     }
 
+    //documented in interface
     @Override
     public Card getCardById(Long id) {
 
-        Card card = database.find(SkillCard.class, id);//find tha card
+        //find the Skillcard
+        Card card = this.database.find(SkillCard.class)
+                .fetch("preccense")
+                .fetch("cardType")
+                .setId(id)
+                .findOne();
+        //find the Entitycard
         if(card == null){
-            card = database.find(EntityCard.class, id);
+            card = this.database.find(EntityCard.class)
+                    .fetch("preccense")
+                    .setId(id)
+                    .findOne();
         }
-        if(card.isDeleted()) return null;
-        Preccense preccense = preccenseRepository.getPreccenseById(card.getPreccenseID());
-        card.setPreccense(preccense);
-        if(card instanceof SkillCard) {
-            CardType type = typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID());
-            ((SkillCard) card).setCardType(type);
-        }
-
         return card;
     }
 
@@ -203,53 +213,5 @@ public class CardRepository implements ICardRepository {
         this.database.delete(card);
         return true;
     }
-
-    //this code don't serve
-    private void AssignCardTypeGeneral(List<CardDTO> cardsDTO, Preccense preccense, Card card) {
-
-
-        //in case EntityCard
-        if (card instanceof EntityCard){
-
-            //add this in cardsDTO
-            EntityCardDTO entityCardDTO = AssignEntityCard(preccense, card);
-            cardsDTO.add(entityCardDTO);
-
-            //in case SkillCard
-        } else {
-
-            SkillCardDTO skillCardDTO = AssignSkillCard(preccense, card);
-            //add this in cardsDTO
-            cardsDTO.add(skillCardDTO);
-        }
-    }
-
-    private EntityCardDTO AssignEntityCard(Preccense preccense, Card card) {
-
-        EntityCardDTO entityCardDTO = AutoMapper.map((EntityCard)card, EntityCardDTO.class);//Automaping
-        //change the atributtes to show
-        entityCardDTO.setColorPersistence(preccense.getName());
-        entityCardDTO.setNamePersistence(preccense.getColor());
-        return entityCardDTO;
-
-    }
-
-    private SkillCardDTO AssignSkillCard(Preccense preccense, Card card) {
-
-        SkillCardDTO skillCardDTO = AutoMapper.map((SkillCard)card, SkillCardDTO.class);//Automaping
-        //Your skillCardTYpe
-        SkillCard skillCard = (SkillCard) card;
-        //only to using the casting
-        CardType skillCardType = skillCard.getCardType();
-
-        //change the atributtes to show
-        skillCardDTO.setColorPersistence(preccense.getColor());
-        skillCardDTO.setNamePersistence(preccense.getName());
-        skillCardDTO.setTypeName(skillCardType.getName());
-        return skillCardDTO;
-
-    }
-
-
 
 }

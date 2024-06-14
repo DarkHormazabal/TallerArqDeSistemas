@@ -36,13 +36,13 @@ public interface ICardRepository {
     public Card Find(String name);
 
     /**
-     * @param card add
+     * @param card add by seeder
      * @return
      */
     public Card addEntityCardSeeder(Card card);
 
     /**
-     * @param card add
+     * @param card add by seeder
      * @return
      */
     public Card addSkillCardSeeder(Card card);
