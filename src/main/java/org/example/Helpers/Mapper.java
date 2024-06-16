@@ -11,6 +11,7 @@ import org.example.Models.Specific.SkillCard;
 
 public class Mapper {
 
+    //mapping entities cards
     public static EntityCardDTO toEntityDTO(EntityCard card) {
         if (card == null) {
             return null;
@@ -31,6 +32,7 @@ public class Mapper {
         return dto;
     }
 
+    //mapping skills cards
     public static SkillCardDTO toSkillDTO(SkillCard card) {
         if (card == null) {
             return null;
@@ -49,6 +51,7 @@ public class Mapper {
         return dto;
     }
 
+    //mapping type cards
     public static CardTypeDTO toCardTypeDTO(CardType cardType) {
         if (cardType == null) {
             return null;
@@ -61,6 +64,7 @@ public class Mapper {
         return dto;
     }
 
+    //mapping preccences
     public static PreccenseDTO toPreccenseDTO(Preccense preccense) {
         if (preccense == null) {
             return null;

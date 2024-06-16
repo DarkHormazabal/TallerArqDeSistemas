@@ -48,7 +48,6 @@ public class CardRepository implements ICardRepository {
     @Override
     public Card addEntityCard(AddEntityCardDTO addEntityCardDTO) {
         Preccense FoundPreccense = preccenseRepository.getPreccenseById(addEntityCardDTO.getPreccenseID());
-        long total = getCards().size();
         //automapping
         Card card = CardBuilder.build(idAcumuler + 1L,
                 addEntityCardDTO.getName(),
@@ -72,7 +71,6 @@ public class CardRepository implements ICardRepository {
     @Override
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO) {
         Preccense FoundPreccense = preccenseRepository.getPreccenseById(addSkillCardDTO.getPreccenseID());
-        long total = getCards().size();
         //automapping
         Card card = CardBuilder.build(idAcumuler + 1L,
                 addSkillCardDTO.getName(),
