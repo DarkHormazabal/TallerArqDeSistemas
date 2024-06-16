@@ -10,10 +10,6 @@ import org.example.Builders.EntityCardBuilder;
 import org.example.Builders.SkillCardBuilder;
 import org.example.DTO.AddEntityCardDTO;
 import org.example.DTO.AddSkillCardDTO;
-import org.example.DTO.CardDTO.CardDTO;
-import org.example.DTO.CardDTO.EntityCardDTO;
-import org.example.DTO.CardDTO.SkillCardDTO;
-import org.example.Helpers.AutoMapper;
 import org.example.Interfaces.ICardRepository;
 import org.example.Interfaces.IPreccenseRepository;
 import org.example.Interfaces.ITypeRepository;
@@ -21,7 +17,6 @@ import org.example.Models.Card;
 import org.example.Models.Specific.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j

@@ -1,3 +1,4 @@
+#this file is necessary for execute the program
 # ebean configuration
 ebean:
   dumpMetricsOnShutdown: true

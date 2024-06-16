@@ -1,10 +1,7 @@
 package org.example.DTO.CardDTO;
 
 import io.ebean.annotation.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.MappedSuperclass;
 
@@ -17,6 +14,7 @@ import javax.persistence.MappedSuperclass;
 @Setter
 @MappedSuperclass
 @AllArgsConstructor
+@NoArgsConstructor
 public abstract class CardDTO {
 
     /**
