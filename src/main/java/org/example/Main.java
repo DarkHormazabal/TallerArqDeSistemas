@@ -1,9 +1,16 @@
 package org.example;
 
 import io.javalin.Javalin;
+import io.javalin.http.Header;
+import io.javalin.http.HttpStatus;
+import io.javalin.http.staticfiles.Location;
+import io.javalin.plugin.bundled.RouteOverviewPlugin;
 import lombok.extern.slf4j.Slf4j;
 import io.ebean.DB;
 import io.ebean.Database;
+import org.example.Controllers.CardController;
+import org.example.Controllers.CardTypeController;
+import org.example.Controllers.PreccenseController;
 import org.example.DTO.AddEntityCardDTO;
 import org.example.DTO.AddSkillCardDTO;
 import org.example.Interfaces.ICardRepository;
@@ -28,116 +35,48 @@ import java.util.LinkedList;
 //la hora, todo
 public class Main {
 
-    public static Javalin createAndConfigureJavalin(CardRepository cardRepository) {
-        Javalin app = Javalin.create();
+    public static Javalin createAndConfigureJavalin(CardRepository cardRepository,
+                                                    PreccenseRepository preccenseRepository,
+                                                    TypeRepository typeRepository) {
+        Javalin app = Javalin.create(config -> {
+            // Configuraciones adicionales, si las hay
 
-        // Configuraciones adicionales después de la creación de la instancia
+        });
+
+        // Configuración de CORS manualmente
+        app.options("/*", ctx -> {
+            String accessControlRequestHeaders = ctx.header("Access-Control-Request-Headers");
+            if (accessControlRequestHeaders != null) {
+                ctx.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
+            }
+
+            String accessControlRequestMethod = ctx.header("Access-Control-Request-Method");
+            if (accessControlRequestMethod != null) {
+                ctx.header("Access-Control-Allow-Methods", accessControlRequestMethod);
+            }
+            ctx.status(200);
+        });
+
         app.before(ctx -> {
-            // Lógica para ejecutar antes de manejar cada solicitud
+            ctx.header("Access-Control-Allow-Origin", "*");
+            ctx.header("Access-Control-Allow-Credentials", "true");
         });
 
-        app.after(ctx -> {
-            // Lógica para ejecutar después de manejar cada solicitud
-        });
+        // Registrar controlador de tarjetas
+        new CardController(app, cardRepository);
+        new PreccenseController(app, preccenseRepository);
+        new CardTypeController(app, typeRepository);
 
         app.get("/salir", ctx -> {
-
-            log.debug("Stopping...");
-
+            ctx.result("Servidor detenido");
             app.stop();
-
-            log.debug("Done. ^^");
         });
-
-        app.get("/Cards", ctx -> {
-
-            ctx.json(cardRepository.getCards());
-
-        });
-
-        app.get("/Cards/presence/{preccenseID}", ctx -> {
-            // Obtener el valor del parámetro "preccenseID" de la URL
-            Long preccenseID = Long.parseLong(ctx.pathParam("preccenseID"));
-
-            // Llamar a cardRepository.getCardsByPreccense con el preccenseID
-            ctx.json(cardRepository.getCardsByPreccense(preccenseID));
-        });
-
-        app.get("/Cards/{id}", ctx -> {
-
-            // Llamar a cardRepository.getCardsByPreccense con el preccenseID
-            ctx.json(cardRepository.getCardById(Long.parseLong(ctx.pathParam("id"))));
-        });
-
-        app.get("/Cards/nombre/{name}", ctx -> {
-
-            String name = ctx.pathParam("name");
-            log.debug("Card name: {}", name);
-            if (name.isEmpty()) {
-                ctx.status(400); // Bad Request if the param is empty o null
-                ctx.json("El parámetro 'name' no puede estar vacío.");
-                return;
-            }
-            Card card = cardRepository.Find(name);
-
-            if (card == null) {
-                ctx.status(404); // Not Found si no se encuentra ninguna carta con ese nombre
-                ctx.json("No se encontró ninguna carta con el nombre: " + name);
-            } else {
-                ctx.json(card); // Devolver la carta encontrada como JSON
-            }
-        });
-
-        app.post("/Cards/entity", ctx -> {
-            // Parsear el cuerpo de la solicitud a un objeto AddEntityCardDTO
-            AddEntityCardDTO dto = ctx.bodyAsClass(AddEntityCardDTO.class);
-
-            // Llamar a cardRepository.addEntityCard con el objeto dto
-            cardRepository.addEntityCard(dto);
-
-            // Responder con un código de estado apropiado, por ejemplo 201 para Created
-            ctx.status(201);
-        });
-
-        app.post("/Cards/skill", ctx -> {
-            // Parsear el cuerpo de la solicitud a un objeto AddSkillCardDTO
-            AddSkillCardDTO dto = ctx.bodyAsClass(AddSkillCardDTO.class);
-
-            // Llamar a cardRepository.addSkillCard con el objeto dto
-            cardRepository.addSkillCard(dto);
-
-            // Responder con un código de estado apropiado, por ejemplo 201 para Created
-            ctx.status(201);
-        });
-
-
-        app.delete("/Cards/{id}", ctx -> {
-            // Obtener el ID de la tarjeta de la URL y convertirlo a tipo Long
-            Long cardId = Long.parseLong(ctx.pathParam("id"));
-
-            // Intentar eliminar la tarjeta y obtener el resultado
-            boolean isDeleted = cardRepository.deleteCard(cardId);
-
-            // Verificar si la tarjeta se eliminó correctamente
-            if (isDeleted) {
-                // Responder con un mensaje indicando que la tarjeta se eliminó
-                ctx.result("Tarjeta eliminada correctamente");
-                // Opcionalmente, puedes responder con un código de estado 204 (No Content)
-                ctx.status(200);
-            } else {
-                // Si la tarjeta no se pudo eliminar, responder con un mensaje de error
-                ctx.result("Ya está eliminada la tarjeta");
-                // Opcionalmente, puedes responder con un código de estado 404 (Not Found)
-                ctx.status(404);
-            }
-        });
-
-        // Define tus rutas y manejadores aquí utilizando app.get(), app.post(), etc.
 
         return app;
     }
 
-    public static Javalin start(final int port, CardRepository cardRepository){
+    public static Javalin start(final int port, CardRepository cardRepository,
+                                PreccenseRepository preccenseRepository, TypeRepository typeRepository){
 
         if (port < 1024 || port > 65535){
 
@@ -148,7 +87,7 @@ public class Main {
         log.debug("Starting api rest server in port {} ..", port);
 
         //the server
-        Javalin app = createAndConfigureJavalin(cardRepository);
+        Javalin app = createAndConfigureJavalin(cardRepository, preccenseRepository, typeRepository);
 
 
         //the hookup thread
@@ -200,7 +139,7 @@ public class Main {
 
 
         /**are as controllers*/
-        Javalin app = start(2026, cardRepository);
+        Javalin app = start(2026, cardRepository, preccenseRepository, typeRepository);
 
 
 
