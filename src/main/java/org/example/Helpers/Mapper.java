@@ -1,8 +1,12 @@
 package org.example.Helpers;
 
+import org.example.DTO.CardDTO.CardTypeDTO;
 import org.example.DTO.CardDTO.EntityCardDTO;
+import org.example.DTO.CardDTO.PreccenseDTO;
 import org.example.DTO.CardDTO.SkillCardDTO;
+import org.example.Models.Specific.CardType;
 import org.example.Models.Specific.EntityCard;
+import org.example.Models.Specific.Preccense;
 import org.example.Models.Specific.SkillCard;
 
 public class Mapper {
@@ -45,19 +49,26 @@ public class Mapper {
         return dto;
     }
 
-    public static CardTypeDTO toSkillDTO(TypeCard cardType) {
-        if (card == null) {
+    public static CardTypeDTO toCardTypeDTO(CardType cardType) {
+        if (cardType == null) {
             return null;
         }
 
-        SkillCardDTO dto = new SkillCardDTO(
-                card.getName(),
-                card.getLevel(),
-                card.getDescription(),
-                card.getPreccense().getName(),
-                card.getPreccense().getColor(),
-                card.getPower(),
-                card.getCardType().getName()
+        CardTypeDTO dto = new CardTypeDTO(
+                cardType.getName()
+        );
+
+        return dto;
+    }
+
+    public static PreccenseDTO toPreccenseDTO(Preccense preccense) {
+        if (preccense == null) {
+            return null;
+        }
+
+        PreccenseDTO dto = new PreccenseDTO(
+                preccense.getName(),
+                preccense.getColor()
         );
 
         return dto;
