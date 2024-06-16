@@ -37,7 +37,7 @@ public class AddEntityCardDTO {
      * The deleted.
      */
 
-    private Long preccenseID;
+    private String preccenseName;
 
     /**
      * The physicalPower.

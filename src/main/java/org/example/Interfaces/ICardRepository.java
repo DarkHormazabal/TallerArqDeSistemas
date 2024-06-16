@@ -46,7 +46,7 @@ public interface ICardRepository {
      * @param preccenseID to view
      * show cards by preccenseID
      */
-    public List<Card> getCardsByPreccense(Long preccenseID);
+    public List<Card> getCardsByPreccense(String preccenseID);
 
     /**
      * @return

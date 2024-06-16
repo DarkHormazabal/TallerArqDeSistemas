@@ -37,7 +37,7 @@ public class AddSkillCardDTO {
      * The preccenseID.
      */
 
-    private Long preccenseID;
+    private String preccenseName;
 
     /**
      * The power.
@@ -49,5 +49,5 @@ public class AddSkillCardDTO {
      * The typeID.
      */
 
-    private Long typeID;
+    private String typeName;
 }

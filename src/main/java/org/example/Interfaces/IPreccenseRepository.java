@@ -17,6 +17,13 @@ public interface IPreccenseRepository {
     public Preccense getPreccenseById(Long id);
 
     /**
+     * @return
+     * @param Name to view
+     * find preccense by id
+     */
+    public Preccense getPreccenseByName(String Name);
+
+    /**
      * Method to addTypePreccenseCard with
      * @param preccense
      */

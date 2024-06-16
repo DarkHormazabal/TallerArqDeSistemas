@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.example.Interfaces.IPreccenseRepository;
+import org.example.Models.Card;
 import org.example.Models.Specific.Preccense;
+import org.example.Models.Specific.SkillCard;
 
 import java.util.List;
 
@@ -28,6 +30,12 @@ public class PreccenseRepository implements IPreccenseRepository {
     public Preccense getPreccenseById(Long id) {
         //find the Preccense
         return database.find(Preccense.class, id);
+    }
+
+    @Override
+    public Preccense getPreccenseByName(String Name) {
+
+        return this.database.find(Preccense.class).where().eq("name", Name).findOne();
     }
 
     @Override

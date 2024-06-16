@@ -40,12 +40,6 @@ public abstract class CardDTO {
      * The persistence's name.
      */
 
-    private String namePersistence;
-
-    /**
-     * The persistence's color.
-     */
-
-    private String colorPersistence;
+    private PreccenseDTO preccenseDTO;
 
 }

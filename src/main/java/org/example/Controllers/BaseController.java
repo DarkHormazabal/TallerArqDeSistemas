@@ -2,6 +2,7 @@ package org.example.Controllers;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import org.example.Helpers.Mapper;
 
 public abstract class BaseController {
 

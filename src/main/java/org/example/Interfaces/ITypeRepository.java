@@ -15,6 +15,13 @@ public interface ITypeRepository {
     public CardType getTypeSkillCardById(Long id);
 
     /**
+     * @return
+     * @param cardTypeName to view
+     * find type by id
+     */
+    public CardType getTypeSkillCardByName(String cardTypeName);
+
+    /**
      * Method to addTypeSkillCard with
      * @param cardType
      */

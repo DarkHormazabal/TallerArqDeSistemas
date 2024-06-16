@@ -4,10 +4,19 @@ import io.javalin.Javalin;
 import io.javalin.http.Context;
 import org.example.DTO.AddEntityCardDTO;
 import org.example.DTO.AddSkillCardDTO;
+import org.example.DTO.CardDTO.CardDTO;
+import org.example.DTO.CardDTO.EntityCardDTO;
+import org.example.DTO.CardDTO.SkillCardDTO;
+import org.example.Helpers.Mapper;
 import org.example.Interfaces.ICardRepository;
 import org.example.Models.Card;
+import org.example.Models.Specific.EntityCard;
+import org.example.Models.Specific.SkillCard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class CardController extends BaseController {
 
@@ -23,7 +32,7 @@ public class CardController extends BaseController {
     @Override
     protected void configureRoutes() {
         app.get("/Cards", this::getAllCards);
-        app.get("/Cards/presence/{preccenseID}", this::getCardsByPreccense);
+        app.get("/Cards/presence/{preccenseStr}", this::getCardsByPreccense);
         app.get("/Cards/{id}", this::getCardById);
         app.get("/Cards/nombre/{name}", this::getCardByName);
         app.post("/Cards/entity", this::addEntityCard);
@@ -32,19 +41,31 @@ public class CardController extends BaseController {
     }
 
     private void getAllCards(Context ctx) {
-        ctx.json(cardRepository.getCards());
+        List<Card> cards = cardRepository.getCards();
+        List<CardDTO> cardDTOS = Mapper.toCardDTOList(cards);
+        ctx.json(cardDTOS);
     }
 
     private void getCardsByPreccense(Context ctx) {
-        String preccenseIDStr = ctx.pathParam("preccenseID");
-        Long preccenseID = Long.parseLong(preccenseIDStr);
-        ctx.json(cardRepository.getCardsByPreccense(preccenseID));
+        String preccenseStr = ctx.pathParam("preccenseStr");
+        log.debug("Preccense name: {}", preccenseStr);
+        if (preccenseStr.isEmpty() || preccenseStr.equals(" ")) {
+            respondWithError(ctx, 400, "El parámetro 'preccenseStr' no puede estar vacío.");
+            return;
+        }
+        List<Card> cards = cardRepository.getCardsByPreccense(preccenseStr);
+        List<CardDTO> cardDTOS = Mapper.toCardDTOList(cards);
+        ctx.json(cardDTOS);
+
     }
 
     private void getCardById(Context ctx) {
         String cardIdStr = ctx.pathParam("id");
         Long cardId = Long.parseLong(cardIdStr);
-        ctx.json(cardRepository.getCardById(cardId));
+        Card card = cardRepository.getCardById(cardId);
+        if(card == null) { respondWithError(ctx, 404, "No se encontró ninguna carta con el nombre: " + cardIdStr); }
+        CardDTO cardDTO = Mapper.toCardDTO(card);
+        ctx.json(cardDTO);
     }
 
     private void getCardByName(Context ctx) {
@@ -58,7 +79,8 @@ public class CardController extends BaseController {
         if (card == null) {
             respondWithError(ctx, 404, "No se encontró ninguna carta con el nombre: " + name);
         } else {
-            ctx.json(card);
+            CardDTO cardDTO = Mapper.toCardDTO(card);
+            ctx.json(cardDTO);
         }
     }
 

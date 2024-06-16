@@ -13,11 +13,11 @@ import org.example.DTO.AddSkillCardDTO;
 import org.example.Interfaces.ICardRepository;
 import org.example.Interfaces.IPreccenseRepository;
 import org.example.Interfaces.ITypeRepository;
+import org.example.Models.BaseModel;
 import org.example.Models.Card;
 import org.example.Models.Specific.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Getter
@@ -47,14 +47,17 @@ public class CardRepository implements ICardRepository {
 
     @Override
     public Card addEntityCard(AddEntityCardDTO addEntityCardDTO) {
-        Preccense FoundPreccense = preccenseRepository.getPreccenseById(addEntityCardDTO.getPreccenseID());
+        Preccense FoundPreccense = preccenseRepository.getPreccenseByName(addEntityCardDTO.getPreccenseName());
+        if(FoundPreccense == null) {
+            return null;
+        }
         //automapping
         Card card = CardBuilder.build(idAcumuler + 1L,
                 addEntityCardDTO.getName(),
                 addEntityCardDTO.getLevel(),
                 addEntityCardDTO.getDescription(),
                 false,
-                addEntityCardDTO.getPreccenseID(),
+                FoundPreccense.getId(),
                 FoundPreccense);
 
         EntityCard entityCard = EntityCardBuilder.build(card
@@ -70,21 +73,25 @@ public class CardRepository implements ICardRepository {
 
     @Override
     public Card addSkillCard(AddSkillCardDTO addSkillCardDTO) {
-        Preccense FoundPreccense = preccenseRepository.getPreccenseById(addSkillCardDTO.getPreccenseID());
+        Preccense FoundPreccense = preccenseRepository.getPreccenseByName(addSkillCardDTO.getPreccenseName());
+        if(FoundPreccense == null) {
+            return null;
+        }
         //automapping
         Card card = CardBuilder.build(idAcumuler + 1L,
                 addSkillCardDTO.getName(),
                 addSkillCardDTO.getLevel(),
                 addSkillCardDTO.getDescription(),
                 false,
-                addSkillCardDTO.getPreccenseID(),
+                FoundPreccense.getId(),
                 FoundPreccense);
         //automapping
-        CardType foundtype = typeRepository.getTypeSkillCardById(addSkillCardDTO.getTypeID());
+        CardType founded = typeRepository.getTypeSkillCardByName(addSkillCardDTO.getTypeName());
+        if (founded == null) { return null; }
         SkillCard skillCard = SkillCardBuilder.build(card,
                 addSkillCardDTO.getPower(),
-                addSkillCardDTO.getTypeID(),
-                foundtype);
+                founded.getId(),
+                founded);
         idAcumuler++;
         this.database.save(skillCard);
         return skillCard;
@@ -154,32 +161,36 @@ public class CardRepository implements ICardRepository {
         List<Card> cardList = new ArrayList<>();
         cardList.addAll(entityCardList);
         cardList.addAll(skillCardList);
+
+        Collections.sort(cardList, Comparator.comparing(BaseModel::getName));
+
         return cardList;
 
     }
 
     //documented in interface
     @Override
-    public List<Card> getCardsByPreccense(Long preccenseID) {
+    public List<Card> getCardsByPreccense(String preccenseName) {
         //preccense's validation
-        Preccense preccense = preccenseRepository.getPreccenseById(preccenseID);
-        if(preccense == null) return null;
+        Preccense preccenseFound = preccenseRepository.getPreccenseByName(preccenseName);
+        if(preccenseFound == null) return null;
 
-        //select all entities with preccenses
         List<EntityCard> entityCardList = this.database.find(EntityCard.class)
                 .fetch("preccense")
-                .where().eq("preccenseID", preccenseID).findList();// Supongamos que tienes una lista de EntityCard
+                .where().eq("preccense.id", preccenseFound.getId()).findList();// Supongamos que tienes una lista de EntityCard
 
         //select all skills with preccenses and cardTypes
         List<SkillCard> skillCardList = this.database.find(SkillCard.class)
                 .fetch("preccense")
                 .fetch("cardType")
-                .where().eq("preccenseID", preccenseID).findList();
+                .where().eq("preccense.id", preccenseFound.getId()).findList();
 
         //is similar, but preccense is found by id sent by client
-        List<Card> cardList = new ArrayList<>();
+        List<Card> cardList = new LinkedList<>();
         cardList.addAll(entityCardList);
         cardList.addAll(skillCardList);
+
+        Collections.sort(cardList, Comparator.comparing(BaseModel::getName));
 
         return cardList;
     }

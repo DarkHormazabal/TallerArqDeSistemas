@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.example.Interfaces.ITypeRepository;
 import org.example.Models.Specific.CardType;
+import org.example.Models.Specific.Preccense;
 
 import java.util.List;
 
@@ -31,6 +32,11 @@ public class TypeRepository implements ITypeRepository {
     @Override
     public CardType getTypeSkillCardById(Long id) {
         return database.find(CardType.class, id);
+    }
+
+    @Override
+    public CardType getTypeSkillCardByName(String cardTypeName) {
+        return this.database.find(CardType.class).where().eq("name", cardTypeName).findOne();
     }
 
     @Override

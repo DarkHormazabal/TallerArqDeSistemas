@@ -17,14 +17,14 @@ public class SkillCardDTO extends CardDTO{
     private int power;
 
     /**
-     * The typeID.
+     * The type.
      */
 
-    private String typeName;
+    private CardTypeDTO type;
 
-    public SkillCardDTO(String name, int level, String description, String namrPersistence, String colorPersistence, int power, String typeName) {
-        super(name, level, description, namrPersistence, colorPersistence);
+    public SkillCardDTO(String name, int level, String description, PreccenseDTO preccenseDTO, int power, CardTypeDTO type) {
+        super(name, level, description, preccenseDTO);
         this.power = power;
-        this.typeName = typeName;
+        this.type = type;
     }
 }
