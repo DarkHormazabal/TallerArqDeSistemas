@@ -14,12 +14,23 @@ repositories {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(16))
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.example.Main'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
 compileJava {
-    options.release = 21
+    options.release = 16
     options.encoding = 'UTF-8'
 }
 

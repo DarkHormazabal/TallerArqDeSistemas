@@ -123,7 +123,7 @@ public class Seed {
             for (int i = 0; i < length; i++) {
                     // Approximately 1/3 probability to add a space, but don't to start
                     // and neither can have 2 spaces
-                    if (random.nextInt(0,3) == 0 && i > 0 && name.length() > 2) {
+                    if (random.nextInt(4) == 0 && i > 0 && name.length() > 2) {
                             name.append(' ');
 
                     //fisrt letter
