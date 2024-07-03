@@ -122,6 +122,8 @@ public class Main {
 
         Database db = DB.getDefault();//crea la base de datos
 
+        log.debug(db + "");
+
         PreccenseRepository preccenseRepository = new PreccenseRepository(db, new LinkedList<>());
 
         TypeRepository typeRepository = new TypeRepository(db, new LinkedList<>());
