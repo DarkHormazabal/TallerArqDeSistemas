@@ -42,6 +42,7 @@ public class Mapper {
                 card.getMagicalPower(),
                 card.getPhysicalProtection(),
                 card.getMagicalProtection()
+
         );
 
         return dto;
@@ -55,12 +56,14 @@ public class Mapper {
                 card.getLevel(),
                 card.getDescription(),
                 toPreccenseDTO(card.getPreccense()),
-                card.getPower(),
-                toCardTypeDTO(card.getCardType())
+                toCardTypeDTO(card.getType()),
+                card.getPower()
+
         );
 
         return dto;
     }
+
 
     public static List<CardDTO> toCardDTOList(List<Card> cards) {
 

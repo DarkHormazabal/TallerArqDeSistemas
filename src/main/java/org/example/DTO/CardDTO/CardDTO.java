@@ -36,10 +36,7 @@ public abstract class CardDTO {
 
     private String description;
 
-    /**
-     * The persistence's name.
-     */
-
     private PreccenseDTO preccenseDTO;
+
 
 }

@@ -1,6 +1,6 @@
 package org.example.Services;
 
-import io.ebean.Database;
+import io.ebean.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -57,7 +57,6 @@ public class CardRepository implements ICardRepository {
                 addEntityCardDTO.getLevel(),
                 addEntityCardDTO.getDescription(),
                 false,
-                FoundPreccense.getId(),
                 FoundPreccense);
 
         EntityCard entityCard = EntityCardBuilder.build(card
@@ -83,15 +82,12 @@ public class CardRepository implements ICardRepository {
                 addSkillCardDTO.getLevel(),
                 addSkillCardDTO.getDescription(),
                 false,
-                FoundPreccense.getId(),
                 FoundPreccense);
         //automapping
         CardType founded = typeRepository.getTypeSkillCardByName(addSkillCardDTO.getTypeName());
         if (founded == null) { return null; }
         SkillCard skillCard = SkillCardBuilder.build(card,
-                addSkillCardDTO.getPower(),
-                founded.getId(),
-                founded);
+                founded, addSkillCardDTO.getPower());
         idAcumuler++;
         this.database.save(skillCard);
         return skillCard;
@@ -103,21 +99,29 @@ public class CardRepository implements ICardRepository {
 
         try {
             //find the skillCard
-            Card card = this.database.find(SkillCard.class)
-                    .fetch("preccense")
-                    .fetch("cardType")
-                    .where().eq("name", name)
+            Card card = this.database.find(EntityCard.class)
+                    .where()
+                    .eq("name", name)
                     .findOne();
 
             //find the Entitycard
             if(card == null){
-                card = this.database.find(EntityCard.class)
-                        .fetch("preccense")
-                        .where().eq("name", name)
+                card = this.database.find(SkillCard.class)
+                        .where()
+                        .eq("name", name)
                         .findOne();
+
+                if(card == null){ return null; }
+                CardType type = this.typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID());
+                ((SkillCard) card).setType(type);
             }
             //notfound
-            if(card == null || card.isDeleted()) return null;
+            if(card.isDeleted()) return null;
+
+            Preccense preccense = this.preccenseRepository.getPreccenseById(card.getPreccenseID());
+
+            card.setPreccense(preccense);
+
             return card;
 
         } catch (Exception e) {
@@ -137,7 +141,14 @@ public class CardRepository implements ICardRepository {
     public Card addCardSeeder(Card card) {
 
         idAcumuler++;
-        this.database.save(card);
+        if(card instanceof EntityCard) {
+            EntityCard entityCard = (EntityCard) card;
+            this.database.save(entityCard);
+        } else {
+            SkillCard skillCard = (SkillCard) card;
+            this.database.save(skillCard);
+        }
+
         return card;
     }
 
@@ -148,13 +159,24 @@ public class CardRepository implements ICardRepository {
 
         //select all entities with preccenses
         List<EntityCard> entityCardList = this.database.find(EntityCard.class)
-                .fetch("preccense")
                 .findList();
+
+        Preccense preccense;
+        CardType type;
+
+        for (EntityCard entityCard : entityCardList) {
+            preccense = this.preccenseRepository.getPreccenseById(entityCard.getPreccenseID());
+            entityCard.setPreccense(preccense);
+        }
         //select all skills with preccenses and cardTypes
         List<SkillCard> skillCardList = this.database.find(SkillCard.class)
-                .fetch("preccense")
-                .fetch("cardType")
                 .findList();
+        for (SkillCard skillCard : skillCardList) {
+            preccense = this.preccenseRepository.getPreccenseById(skillCard.getPreccenseID());
+            type = this.typeRepository.getTypeSkillCardById(skillCard.getTypeID());
+            skillCard.setPreccense(preccense);
+            skillCard.setType(type);
+        }
 
 
         //both cardlists
@@ -176,14 +198,30 @@ public class CardRepository implements ICardRepository {
         if(preccenseFound == null) return null;
 
         List<EntityCard> entityCardList = this.database.find(EntityCard.class)
-                .fetch("preccense")
-                .where().eq("preccense.id", preccenseFound.getId()).findList();// Supongamos que tienes una lista de EntityCard
+                .findList();
 
+        List<EntityCard> entityCardList2 = new ArrayList<>();
         //select all skills with preccenses and cardTypes
         List<SkillCard> skillCardList = this.database.find(SkillCard.class)
-                .fetch("preccense")
-                .fetch("cardType")
-                .where().eq("preccense.id", preccenseFound.getId()).findList();
+                .findList();// Supongamos que tienes una lista de SkillCard
+
+        List<Card> skillCardList2 = new ArrayList<>();
+        for (EntityCard entityCard : entityCardList) {
+            if(preccenseFound.getId().equals(entityCard.getPreccenseID())) {
+                entityCard.setPreccense(preccenseFound);
+                entityCardList2.add(entityCard);
+            }
+        }
+        CardType type;
+        for (SkillCard skillCard : skillCardList) {
+            if(preccenseFound.getId().equals(skillCard.getPreccenseID())) {
+                type = this.typeRepository.getTypeSkillCardById(skillCard.getTypeID());
+                skillCard.setPreccense(preccenseFound);
+                skillCard.setType(type);
+                skillCardList2.add(skillCard);
+            }
+        }
+
 
         //is similar, but preccense is found by id sent by client
         List<Card> cardList = new LinkedList<>();
@@ -198,20 +236,25 @@ public class CardRepository implements ICardRepository {
     //documented in interface
     @Override
     public Card getCardById(Long id) {
-
-        //find the Skillcard
+        // Encuentra la EntityCard
         Card card = this.database.find(SkillCard.class)
-                .fetch("preccense")
-                .fetch("cardType")
                 .setId(id)
                 .findOne();
-        //find the Entitycard
+
+
         if(card == null){
             card = this.database.find(EntityCard.class)
-                    .fetch("preccense")
                     .setId(id)
                     .findOne();
+        } else {
+
+            CardType type = this.typeRepository.getTypeSkillCardById(((SkillCard) card).getTypeID());
+            ((SkillCard) card).setType(type);
+
         }
+
+        Preccense preccense = this.preccenseRepository.getPreccenseById(card.getPreccenseID());
+        card.setPreccense(preccense);
         return card;
     }
 

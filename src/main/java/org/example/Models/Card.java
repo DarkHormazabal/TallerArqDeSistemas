@@ -5,10 +5,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.example.Models.Specific.Preccense;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * Card abstract Class.
@@ -42,13 +39,18 @@ public class Card extends BaseModel{
     @NotNull
     private boolean deleted;
 
+
     /**
-     * The deleted.
+     * The precenseID.
      */
     @NotNull
     private Long preccenseID;
-
-    @ManyToOne
+    /**
+     * The precense.
+     */
+    @NotNull
     private Preccense preccense;
+
+
 
 }

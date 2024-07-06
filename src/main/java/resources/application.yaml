@@ -1,4 +1,3 @@
-#this file is necessary for execute the program
 # ebean configuration
 ebean:
   dumpMetricsOnShutdown: true
@@ -8,16 +7,16 @@ ebean:
     run: true
   debug:
     sql: true
-    lazy load: true
+    lazyLoad: true
   logging: all
   transient-init-error: false
 
-  # database configuration
-  datasource:
-    db:
-      username: ""
-      password: ""
-      platform: sqlite # h2, postgres, mysql, oracle, sqlserver
-      ddlMode: dropCreate # none | dropCreate | migrations
-      dbName: Cards
-      url: jdbc:sqlite:C:/Users/56949/IdeaProjects/TallerDeArqDeSistemas/src/main/java/resources/Cards.db
+datasource:
+  db:
+    username: "root"  # Usuario de MySQL
+    password: "Estoy"  # Contraseña de MySQL
+    platform: mysql  # Tipo de plataforma de base de datos
+    ddlMode: dropCreate  # Modo de creación de tablas (puedes ajustarlo según tus necesidades)
+    dbName: cards  # Nombre de la base de datos en MySQL
+    url: jdbc:mysql://localhost:3306/cards  # URL de conexión JDBC para MySQL
+    driver: com.mysql.cj.jdbc.Driver  # Driver JDBC para MySQL

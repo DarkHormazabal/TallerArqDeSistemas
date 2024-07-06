@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: cards
+      MYSQL_USER: my-user    # Crear un usuario my-user
+      MYSQL_PASSWORD: ultra-secret-pwd-for-as  # Establecer la contraseña del usuario my-user
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+    # This is just an example, not intended to be a production configuration
+
+  javalin-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: javalin-app-container
+    ports:
+      - "3307:3306"
+    environment:
+      JDBC_URL: jdbc:mysql://mysql:3306/cards  # Cambiar a MySQL y usar el nombre del servicio db
+      JDBC_USER: my-user
+      JDBC_PASSWORD: ultra-secret-pwd-for-as
+    depends_on:
+      - db  # Especificar que depende del servicio db

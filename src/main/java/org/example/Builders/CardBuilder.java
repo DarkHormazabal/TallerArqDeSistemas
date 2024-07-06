@@ -9,14 +9,13 @@ import org.example.Models.Specific.Preccense;
 @Builder
 public class CardBuilder extends BaseModel {
 
-    public static Card build(long id,String name,int level, String description,boolean deleted, Long preccenseID, Preccense
-    preccense){
+    public static Card build(long id,String name,int level, String description,boolean deleted, Preccense preccense){
         Card cardBuilt = Card.builder()
                 .level(level)
                 .description(description)
                 .deleted(deleted)
-                .preccenseID(preccenseID)
                 .preccense(preccense)
+                .preccenseID(preccense.getId())
                 .build();
         cardBuilt.setId(id);
         cardBuilt.setName(name);

@@ -7,12 +7,12 @@ import org.example.Models.Specific.SkillCard;
 
 public class SkillCardBuilder {
 
-    public static SkillCard build(Card card, int power, Long typeID, CardType cardType) {
+    public static SkillCard build(Card card, CardType type, int power) {
 
         SkillCard skillCard = new SkillCard(card.getName(), card.getLevel(),
                 card.getDescription(), card.isDeleted(),
-                card.getPreccenseID(), card.getPreccense()
-                , power, typeID, cardType);
+                card.getPreccenseID(),
+                card.getPreccense(), type, power);
         skillCard.setId(card.getId());
         return skillCard;
 

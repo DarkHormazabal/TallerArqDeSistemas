@@ -149,7 +149,6 @@ public class Seed {
             String description;
             int indexPreccense;
             long indexPreccenseID;
-            Preccense preccense;
             Card cardGenerated;
             int EntityOrSkill;
             for (int i = 0; i < quantity; i++) {
@@ -161,12 +160,12 @@ public class Seed {
                     description = RandomName(RandomNumbers(10, 40)) + ".";
                     //the preccenseList's quantity
                     indexPreccense = RandomNumbers(0, preccenseList.size() - 1);
-                    indexPreccenseID = indexPreccense + 1;
-                    preccense = preccenseList.get(indexPreccense);
+                    Preccense selectedPreccense = preccenseList.get(indexPreccense);
+
 
                     //generate Card
 
-                    cardGenerated = CardBuilder.build((long)i+1, name, level, description, false, indexPreccenseID, preccense);
+                    cardGenerated = CardBuilder.build((long)i+1, name, level, description, false, selectedPreccense);
                     log.debug(cardGenerated.getId().toString());
 
                     //cardtypeRandom
@@ -211,9 +210,8 @@ public class Seed {
             int power = RandomNumbers(0, 30);
             //the typeList's quantity
             int indexType = RandomNumbers(0, typeList.size() - 1);
-            long indexTypeID = indexType + 1;
-            CardType cardType = typeList.get(indexType);
-            SkillCard skillCard = SkillCardBuilder.build(card, power, indexTypeID, cardType);
+            CardType selectedCardType = typeList.get(indexType);
+            SkillCard skillCard = SkillCardBuilder.build(card, selectedCardType, power);
             this.cardRepository.addCardSeeder(skillCard);
     }
 }

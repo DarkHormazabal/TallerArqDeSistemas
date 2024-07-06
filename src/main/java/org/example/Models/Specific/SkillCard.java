@@ -4,10 +4,7 @@ import io.ebean.annotation.NotNull;
 import lombok.*;
 import org.example.Models.Card;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * SkillCard Class.
@@ -33,14 +30,18 @@ public class SkillCard extends Card {
     @NotNull
     private Long typeID;
 
-    @ManyToOne
-    private CardType cardType;
+    /**
+     * The type.
+     */
+    @NotNull
+    private CardType type;
 
-    public SkillCard(String name, int level, String description, boolean deleted, Long preccenseID, Preccense preccense, int power, Long typeID, CardType cardType) {
+
+    public SkillCard(String name, int level, String description, boolean deleted, Long preccenseID, Preccense preccense, CardType type, int power) {
         super(level, description, deleted, preccenseID, preccense);
+        this.typeID = type.getId();
+        this.type = type;
         this.power = power;
-        this.typeID = typeID;
-        this.cardType = cardType;
         this.setName(name);
     }
 }

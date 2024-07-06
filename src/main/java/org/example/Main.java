@@ -1,5 +1,7 @@
 package org.example;
 
+import io.ebean.DatabaseFactory;
+import io.ebean.config.DatabaseConfig;
 import io.javalin.Javalin;
 import io.javalin.http.Header;
 import io.javalin.http.HttpStatus;
@@ -33,7 +35,66 @@ import java.util.LinkedList;
 //entrega mucho mas imformacion que el system.out.print ln
 //nombre de la clase
 //la hora, todo
-public class Main {
+public final class Main {
+
+
+    public static void main(String[] args) {
+
+        log.debug("starting main...");
+
+        log.debug("loading the database...");
+
+        //Database db = DB.getDefault();//crea la base de datos
+        Database db = createDatabaseConnection();
+
+        log.debug(db + "");
+
+        PreccenseRepository preccenseRepository = new PreccenseRepository(db, new LinkedList<>());
+
+        TypeRepository typeRepository = new TypeRepository(db, new LinkedList<>());
+
+        CardRepository cardRepository = new CardRepository(new LinkedList<>(), db, preccenseRepository, typeRepository);
+
+
+
+        /**cargan los seeders*/
+        Seed seeders = new Seed(cardRepository, preccenseRepository, typeRepository);
+        seeders.Seeders();
+
+        log.debug("loaded the database...");
+        log.debug("Beginning app...");
+
+
+        /**are as controllers*/
+        Javalin app = start(2026, cardRepository, preccenseRepository, typeRepository);
+
+
+
+
+        /**Esto apunta al puerto, es similar a los controladores de software donde utiliza un http y con esa
+         * peticion obtiene el resultado*/
+
+
+
+        /**
+         log.debug("Stopping...");
+
+         app.stop();
+
+         log.debug("Done. ^^");
+         */
+    }
+
+    private static Database createDatabaseConnection() {
+        // Configurar la conexión a la base de datos MySQL
+        DatabaseConfig config = new DatabaseConfig();
+        config.loadFromProperties(); // Cargar configuraciones de un archivo properties si es necesario
+
+
+
+        // Crear la instancia de la base de datos usando la configuración especificada
+        return DatabaseFactory.create(config);
+    }
 
     public static Javalin createAndConfigureJavalin(CardRepository cardRepository,
                                                     PreccenseRepository preccenseRepository,
@@ -114,50 +175,6 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
 
-        log.debug("starting main...");
-
-        log.debug("loading the database...");
-
-        Database db = DB.getDefault();//crea la base de datos
-
-        log.debug(db + "");
-
-        PreccenseRepository preccenseRepository = new PreccenseRepository(db, new LinkedList<>());
-
-        TypeRepository typeRepository = new TypeRepository(db, new LinkedList<>());
-
-        CardRepository cardRepository = new CardRepository(new LinkedList<>(), db, preccenseRepository, typeRepository);
-
-
-
-        /**cargan los seeders*/
-        Seed seeders = new Seed(cardRepository, preccenseRepository, typeRepository);
-        seeders.Seeders();
-
-        log.debug("loaded the database...");
-        log.debug("Beginning app...");
-
-
-        /**are as controllers*/
-        Javalin app = start(2026, cardRepository, preccenseRepository, typeRepository);
-
-
-
-
-        /**Esto apunta al puerto, es similar a los controladores de software donde utiliza un http y con esa
-         * peticion obtiene el resultado*/
-
-
-
-        /**
-         log.debug("Stopping...");
-
-         app.stop();
-
-         log.debug("Done. ^^");
-         */
-    }
 
 }
