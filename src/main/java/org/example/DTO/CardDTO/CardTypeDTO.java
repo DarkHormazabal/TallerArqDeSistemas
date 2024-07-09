@@ -11,6 +11,12 @@ import lombok.*;
 public class CardTypeDTO {
 
     /**
+     * The id.
+     * All tables have id's attribute, therefore is implemented here
+     */
+    @NotNull
+    private Long id;
+    /**
      * The Name.
      * All tables have name's attribute, therefore is implemented here
      */

@@ -18,6 +18,13 @@ import javax.persistence.MappedSuperclass;
 public abstract class CardDTO {
 
     /**
+     * The id.
+     * All tables have name's attribute, therefore is implemented here
+     */
+
+    private Long id;
+
+    /**
      * The Name.
      * All tables have name's attribute, therefore is implemented here
      */

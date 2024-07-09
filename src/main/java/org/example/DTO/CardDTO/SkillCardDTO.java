@@ -22,8 +22,8 @@ public class SkillCardDTO extends CardDTO{
 
     private CardTypeDTO type;
 
-    public SkillCardDTO(String name, int level, String description, PreccenseDTO preccenseDTO,CardTypeDTO type, int power) {
-        super(name, level, description, preccenseDTO);
+    public SkillCardDTO(Long id, String name, int level, String description, PreccenseDTO preccenseDTO,CardTypeDTO type, int power) {
+        super(id, name, level, description, preccenseDTO);
         this.type = type;
         this.power = power;
     }

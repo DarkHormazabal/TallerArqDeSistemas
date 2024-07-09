@@ -81,6 +81,7 @@ public class Mapper {
         }
 
         CardTypeDTO dto = new CardTypeDTO(
+                cardType.getId(),
                 cardType.getName()
         );
 
@@ -101,6 +102,7 @@ public class Mapper {
         }
 
         PreccenseDTO dto = new PreccenseDTO(
+                preccense.getId(),
                 preccense.getName(),
                 preccense.getColor()
         );
