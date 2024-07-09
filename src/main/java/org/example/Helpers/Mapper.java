@@ -34,6 +34,7 @@ public class Mapper {
 
 
         EntityCardDTO dto = new EntityCardDTO(
+                card.getId(),
                 card.getName(),
                 card.getLevel(),
                 card.getDescription(),
@@ -52,6 +53,7 @@ public class Mapper {
     public static SkillCardDTO toSkillDTO(SkillCard card) {
 
         SkillCardDTO dto = new SkillCardDTO(
+                card.getId(),
                 card.getName(),
                 card.getLevel(),
                 card.getDescription(),
