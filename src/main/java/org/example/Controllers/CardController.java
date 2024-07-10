@@ -102,7 +102,7 @@ public class CardController extends BaseController {
         boolean isDeleted = cardRepository.deleteCard(cardId);
         if (isDeleted) {
             ctx.result("Tarjeta eliminada correctamente");
-            ctx.status(200);
+            ctx.status(204);
         } else {
             respondWithError(ctx, 404, "Ya está eliminada la tarjeta");
         }
