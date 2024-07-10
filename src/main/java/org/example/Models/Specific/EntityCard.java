@@ -44,8 +44,8 @@ public class EntityCard extends Card {
     private int magicalProtection;
 
 
-    public EntityCard(String name, int level, String description, boolean deleted, Long preccenseID, Preccense preccense, int physicalPower, int magicalPower, int physicalProtection, int magicalProtection) {
-        super(level, description, deleted, preccenseID, preccense);
+    public EntityCard(String name, int level, String description, String typeCard, boolean deleted, Long preccenseID, Preccense preccense, int physicalPower, int magicalPower, int physicalProtection, int magicalProtection) {
+        super(level, description, typeCard, deleted, preccenseID, preccense);
         this.physicalPower = physicalPower;
         this.magicalPower = magicalPower;
         this.physicalProtection = physicalProtection;

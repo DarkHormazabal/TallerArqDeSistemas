@@ -10,7 +10,9 @@ public class SkillCardBuilder {
     public static SkillCard build(Card card, CardType type, int power) {
 
         SkillCard skillCard = new SkillCard(card.getName(), card.getLevel(),
-                card.getDescription(), card.isDeleted(),
+                card.getDescription(),
+                "SkillCard",
+                card.isDeleted(),
                 card.getPreccenseID(),
                 card.getPreccense(), type, power);
         skillCard.setId(card.getId());

@@ -38,6 +38,7 @@ public class Mapper {
                 card.getName(),
                 card.getLevel(),
                 card.getDescription(),
+                card.getTypeCard(),
                 toPreccenseDTO(card.getPreccense()),
                 card.getPhysicalPower(),
                 card.getMagicalPower(),
@@ -57,6 +58,7 @@ public class Mapper {
                 card.getName(),
                 card.getLevel(),
                 card.getDescription(),
+                card.getTypeCard(),
                 toPreccenseDTO(card.getPreccense()),
                 toCardTypeDTO(card.getType()),
                 card.getPower()

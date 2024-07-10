@@ -9,7 +9,9 @@ public class EntityCardBuilder {
     public static EntityCard build(Card card, int physicalPower, int magicalPower, int physicalProtection, int magicalProtection) {
 
         EntityCard entityCard = new EntityCard(card.getName(), card.getLevel(),
-                card.getDescription(), card.isDeleted(),
+                card.getDescription(),
+                "EntityCard",
+                card.isDeleted(),
                 card.getPreccenseID(),
                 card.getPreccense(),
                 physicalPower, magicalPower,

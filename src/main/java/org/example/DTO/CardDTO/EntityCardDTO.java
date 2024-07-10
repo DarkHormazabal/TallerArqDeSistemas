@@ -36,8 +36,8 @@ public class EntityCardDTO extends CardDTO{
 
     private int magicalProtection;
 
-    public EntityCardDTO(Long id, String name, int level, String description, PreccenseDTO preccenseDTO,int physicalPower, int magicalPower, int physicalProtection, int magicalProtection) {
-        super(id, name, level, description, preccenseDTO);
+    public EntityCardDTO(Long id, String name, int level, String description, String typeCard, PreccenseDTO preccenseDTO,int physicalPower, int magicalPower, int physicalProtection, int magicalProtection) {
+        super(id, name, level, description, typeCard, preccenseDTO);
         this.physicalPower = physicalPower;
         this.magicalPower = magicalPower;
         this.physicalProtection = physicalProtection;

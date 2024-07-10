@@ -43,6 +43,12 @@ public abstract class CardDTO {
 
     private String description;
 
+    /**
+     * The typeCard.
+     */
+
+    private String typeCard;
+
     private PreccenseDTO preccenseDTO;
 
 

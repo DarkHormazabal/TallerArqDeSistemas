@@ -34,6 +34,12 @@ public class Card extends BaseModel{
     private String description;
 
     /**
+     * The typeCard.
+     */
+    @NotNull
+    private String typeCard;
+
+    /**
      * The deleted.
      */
     @NotNull
